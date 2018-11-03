@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/categorySpinner"
+        style="?android:attr/spinnerItemStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:paddingStart="7dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="7dp"
+        android:paddingBottom="5dp"
+        android:singleLine="true"
+        android:text="@string/category"
+        android:textColor="#6E6E6E"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+</RelativeLayout>

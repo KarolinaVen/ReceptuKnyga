@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_window_recipe_layout"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_margin="10dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/recipe_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/round_corners"
+        android:scaleType="centerCrop"
+        android:tint="#1F000000"
+        app:riv_corner_radius="15dp" />
+
+    <RatingBar
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:clickable="false"
+        android:isIndicator="true" />
+
+    <TextView
+        android:id="@+id/recipeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/recipeCategory"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="10dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.30"
+        android:shadowRadius="2.5"
+        android:text=""
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/recipeCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.30"
+        android:shadowRadius="2.5"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+</RelativeLayout>

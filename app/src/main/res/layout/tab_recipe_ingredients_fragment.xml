@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/measurement_system"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_shadow"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="7dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="7dp"
+                android:paddingBottom="5dp"
+                android:text="@string/measurement_system"
+                android:textColor="#6E6E6E"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/metric_system_fragment"
+                    style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/metricSystem"
+                    android:textColor="#6E6E6E"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    android:id="@+id/us_system_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/usSystem"
+                    android:textColor="#6E6E6E"
+                    android:textSize="15sp" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recipe_ingredient_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/measurement_system"
+            tools:listitem="@layout/recipe_ingredient_recycler_view" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recipe_ingredient_recycler"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_shadow"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/from_to_pan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="7dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="7dp"
+                android:paddingBottom="5dp"
+                android:text="@string/from_to"
+                android:textColor="#6E6E6E"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_shadow"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/pan_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/diameter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/diameter"
+                        android:inputType="phone"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/height"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/height"
+                        android:inputType="phone"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/length"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/length"
+                        android:inputType="phone"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/breadth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/breadth"
+                        android:inputType="phone"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_shadow"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/pan_spinner2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/diameter2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/diameter"
+                        android:inputType="phone"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/height2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/height"
+                        android:inputType="phone"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/length2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/length"
+                        android:inputType="phone"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/breadth2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/breadth"
+                        android:inputType="phone"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/calculation"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/rounded_shadow"
+                android:onClick="calculatePan"
+                android:paddingStart="7dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="7dp"
+                android:paddingBottom="5dp"
+                android:src="@drawable/ic_done_black" />
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

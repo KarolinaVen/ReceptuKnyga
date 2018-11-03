@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Receptų Knyga</string>
+    <string name="home_screen">Visi receptai</string>
+    <string name="new_recipe">Pridėti receptą</string>
+    <string name="search_recipe">Receptų paieška</string>
+    <string name="add_recipe">Sukurti receptą</string>
+    <string name="title">Pavadinimas</string>
+    <string name="rating">Įvertinimas</string>
+    <string name="category">Kategorija</string>
+    <string name="preparation">Ruošimo laikas</string>
+    <string name="cooking">Gaminimo laikas</string>
+    <string name="total">Bendras laikas</string>
+    <string name="yield">Porcijos</string>
+    <string name="ingredients">Ingredientai</string>
+    <string name="directions">Eiga</string>
+    <string name="comments">Komentarai</string>
+    <string name="source">Šaltinis</string>
+    <string name="save_button">Išsaugoti</string>
+    <string name="hour">val.</string>
+    <string name="minute">min.</string>
+    <string name="vnt">vnt</string>
+    <string name="modify">Redaguoti</string>
+    <string name="delete">Ištrinti</string>
+    <string name="metricSystem">Metrinė matavimo sistema</string>
+    <string name="usSystem">JAV matavimo sistema</string>
+    <string name="search">Ieškoti</string>
+    <string name="measurement_system">Matavimo sistema</string>
+    <string name="piece">Vnt.</string>
+    <string name="shape">Forma</string>
+    <string name="from_to">Perskaičiuoti ingredientus (iš / į):</string>
+    <string name="diameter">Skersmuo</string>
+    <string name="height">Aukštis</string>
+    <string name="length">Ilgis</string>
+    <string name="breadth">Plotis</string>
+    <string-array name="categories">
+        <item>Daržovės</item>
+        <item>Desertai</item>
+        <item>Kiaušiniai</item>
+        <item>Makaronai</item>
+        <item>Mėsa</item>
+        <item>Paukštiena</item>
+        <item>Salotos</item>
+        <item>Žuvis</item>
+    </string-array>
+   <string-array name="pan">
+       <item>Apvali</item>
+       <item>Kvadratinė</item>
+   </string-array>
+
+</resources>
