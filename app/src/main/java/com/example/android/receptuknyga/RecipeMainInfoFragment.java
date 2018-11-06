@@ -4,10 +4,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +79,10 @@ public class RecipeMainInfoFragment extends Fragment {
                     recipePhotoBitmap = BitmapFactory.decodeFile(fullRecipe.recipe.getImagePath());
                     recipePhoto.setImageBitmap(recipePhotoBitmap);
                     recipeRating.setRating(fullRecipe.recipe.getRating());
+                    LayerDrawable stars = (LayerDrawable) recipeRating.getProgressDrawable();
+                    stars.getDrawable(2).setColorFilter(ContextCompat.getColor(getContext(), R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+                    stars.getDrawable(1).setColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
+
                     recipePreparationHour.setText(String.valueOf(fullRecipe.recipe.getPreparationTime() / 60));
                     recipePreparationMinute.setText(String.valueOf(fullRecipe.recipe.getPreparationTime() % 60));
                     recipeCookingHour.setText(String.valueOf(fullRecipe.recipe.getCookingTime() / 60));

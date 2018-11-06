@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/white">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -14,14 +14,17 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:menu="@menu/toolbar_view"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@color/white" />
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/my_toolbar"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="0dp"
+        android:scrollbarSize="5dp"
+        android:scrollbarThumbVertical="@color/colorPrimaryDark">
 
         <RelativeLayout
             android:id="@+id/main_layout"
@@ -54,6 +57,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/recipe_title"
                     android:background="@android:color/transparent"
+                    android:imeOptions="actionDone"
+                    android:inputType="textNoSuggestions|textMultiLine"
                     android:paddingStart="7dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="7dp"
@@ -112,7 +117,6 @@
                     android:paddingTop="5dp"
                     android:paddingEnd="7dp"
                     android:paddingBottom="5dp"
-                    android:progressTint="#C21807"
                     android:stepSize="1.0" />
             </RelativeLayout>
 
@@ -127,7 +131,9 @@
                 <Spinner
                     android:id="@+id/category"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:dropDownWidth="150dp"
+                    android:dropDownSelector="@color/colorAccent" />
             </RelativeLayout>
 
             <LinearLayout
@@ -168,7 +174,9 @@
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
                             android:gravity="center"
-                            android:inputType="phone"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberPassword"
+                            android:maxLength="2"
                             android:padding="1dp" />
 
                         <TextView
@@ -187,7 +195,9 @@
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
                             android:gravity="center"
-                            android:inputType="phone"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberPassword"
+                            android:maxLength="2"
                             android:padding="1dp" />
 
                         <TextView
@@ -231,7 +241,9 @@
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
                             android:gravity="center"
-                            android:inputType="phone"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberPassword"
+                            android:maxLength="2"
                             android:padding="1dp" />
 
                         <TextView
@@ -250,7 +262,9 @@
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
                             android:gravity="center"
-                            android:inputType="phone"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberPassword"
+                            android:maxLength="2"
                             android:padding="1dp" />
 
                         <TextView
@@ -295,7 +309,9 @@
                             android:layout_weight="2"
                             android:background="@android:color/transparent"
                             android:gravity="center"
-                            android:inputType="phone"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberPassword"
+                            android:maxLength="2"
                             android:padding="1dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -379,18 +395,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/add_ingredients_layout"
-                    android:layout_margin="10dp"
                     android:orientation="vertical">
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/add_ingredient_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end|bottom"
+                        android:layout_gravity="bottom|right"
                         android:layout_margin="5dp"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/ic_add_circle"
-                        app:borderWidth="0dp"
+                        app:borderWidth="2dp"
                         app:fabSize="mini" />
                 </LinearLayout>
             </RelativeLayout>
@@ -425,7 +440,6 @@
                     android:id="@+id/directions_button_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
                     android:orientation="vertical">
 
                     <android.support.design.widget.FloatingActionButton
@@ -436,7 +450,7 @@
                         android:layout_margin="5dp"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/ic_add_circle"
-                        app:borderWidth="0dp"
+                        app:borderWidth="2dp"
                         app:fabSize="mini" />
                 </LinearLayout>
             </LinearLayout>
@@ -463,6 +477,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
+                    android:imeOptions="actionDone"
+                    android:inputType="textNoSuggestions|textMultiLine"
                     android:padding="5dp" />
             </LinearLayout>
 
@@ -488,6 +504,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
+                    android:imeOptions="actionDone"
+                    android:inputType="textNoSuggestions|textMultiLine"
                     android:padding="5dp" />
             </LinearLayout>
         </RelativeLayout>

@@ -37,18 +37,21 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+
     EditText searchName;
     ImageButton searchButton;
-    Spinner categorySearchSpinner;
+    Spinner categorySearchSpinnerMain;
     String categoryItem;
     ImageButton searchCategoryButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         isStoragePermissionGranted();
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         allRecipes();
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        categorySearchSpinner = findViewById(R.id.categorySearchSpinner);
+        categorySearchSpinnerMain = findViewById(R.id.categorySearchSpinnerMain);
         categorySpinner();
 
         searchName = findViewById(R.id.searchNameEditText);
@@ -94,12 +97,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void categorySpinner() {
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.categories, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categorySearchSpinner.setPrompt("Kategorija");
-        categorySearchSpinner.setAdapter(new NothingSelectedSpinnerAdapter(
-                adapter, R.layout.contact_spinner_row_nothing_selected, this));
-        categorySearchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                this, R.array.categories, R.layout.simple_spinner_item_main);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item_main);
+
+        categorySearchSpinnerMain.setPrompt("Kategorija");
+        categorySearchSpinnerMain.setAdapter(new NothingSelectedSpinnerAdapter(
+                adapter, R.layout.contact_spinner_row_nothing_selected_main, this));
+        categorySearchSpinnerMain.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         LinearLayout searchLayout = findViewById(R.id.searchLayout);
         LinearLayout searchCategoryLayout = findViewById(R.id.searchCategoryLayout);
+
         switch (item.getItemId()) {
             case android.R.id.home: {
                 mDrawerLayout.openDrawer(GravityCompat.START);
@@ -143,23 +148,29 @@ public class MainActivity extends AppCompatActivity {
             case R.id.categorySearch: {
                 searchCategoryLayout.setVisibility(View.VISIBLE);
                 searchLayout.setVisibility(View.GONE);
+                break;
             }
         }
+        categorySpinner();
         return super.onOptionsItemSelected(item);
     }
 
     public void search() {
         final LiveData<List<Recipe>> searchRecipe =
                 AppDatabase.getInstance(getApplicationContext()).recipeDao().
-                recipeName(searchName.getText().toString());
+                        recipeName(searchName.getText().toString());
+
         RecyclerView recyclerView = findViewById(R.id.recipeMainView);
+
         final RecipeListAdapter adapter = new RecipeListAdapter(this);
+
         searchRecipe.observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
                 adapter.setRecipes(recipes);
             }
         });
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -167,31 +178,37 @@ public class MainActivity extends AppCompatActivity {
     public void searchCategory() {
         final LiveData<List<Recipe>> searchRecipeCategory =
                 AppDatabase.getInstance(getApplicationContext()).
-                recipeDao().recipesByCategory(categoryItem);
+                        recipeDao().recipesByCategory(categoryItem);
+
         RecyclerView recyclerView = findViewById(R.id.recipeMainView);
 
         final RecipeListAdapter adapter = new RecipeListAdapter(this);
+
         searchRecipeCategory.observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
                 adapter.setRecipes(recipes);
             }
         });
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public void allRecipes() {
         RecyclerView recyclerView = findViewById(R.id.recipeMainView);
+
         final RecipeListAdapter adapter = new RecipeListAdapter(this);
         final LiveData<List<Recipe>> recipeList =
                 AppDatabase.getInstance(this).recipeDao().allRecipes();
+
         recipeList.observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
                 adapter.setRecipes(recipes);
             }
         });
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -199,7 +216,8 @@ public class MainActivity extends AppCompatActivity {
     public void isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         }
     }
@@ -208,10 +226,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
             if (imm != null) {
                 imm.hideSoftInputFromWindow(searchName.getWindowToken(), 0);
             }
-
             search();
             searchName.getText().clear();
         }

@@ -13,13 +13,12 @@ public class Measurement {
     String name;
     int measurementSystemId;
 
-
     @NonNull
     public int getMeasurementId() {
         return measurementId;
     }
 
-    public void setMeasurementId(@NonNull int measurementId){
+    public void setMeasurementId(@NonNull int measurementId) {
         this.measurementId = measurementId;
     }
 
@@ -38,6 +37,5 @@ public class Measurement {
     public void setMeasurementSystemId(int measurementSystemId) {
         this.measurementSystemId = measurementSystemId;
     }
-
 }
 

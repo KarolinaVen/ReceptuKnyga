@@ -1,7 +1,11 @@
 package com.example.android.receptuknyga;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.LiveData;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +14,12 @@ import android.util.Log;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class RecipeInfoActivity extends AppCompatActivity {
+
+    private Toast toast;
+    private long lastBackPressTime = 0;
 
     private static final String TAG = "RecipeInfoActivity";
 
@@ -25,6 +33,7 @@ public class RecipeInfoActivity extends AppCompatActivity {
 
         recipeId = getIntent().getIntExtra("id", -1);
         Log.d(TAG, "Activity started with recipe id = " + recipeId);
+
         fullRecipe = AppDatabase.getInstance(this).recipeDao().allRecipeInfo(recipeId);
         Log.d(TAG, "Receive recipe from db " + fullRecipe);
 
@@ -36,6 +45,11 @@ public class RecipeInfoActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.main_fragments_toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            toolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        }
 
         final ViewPager viewPager = findViewById(R.id.pager);
 
@@ -63,6 +77,26 @@ public class RecipeInfoActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
+            toast = Toast.makeText(this, "Spauskite dar kartą, kad grįžtumėte", Toast.LENGTH_SHORT);
+            toast.show();
+            this.lastBackPressTime = System.currentTimeMillis();
+        } else {
+            if (toast != null) {
+                toast.cancel();
+            }
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.modify_button: {
@@ -70,12 +104,28 @@ public class RecipeInfoActivity extends AppCompatActivity {
                 return true;
             }
             case R.id.delete_button: {
-                deleteRecipe();
+                onDeletePressed();
                 return true;
             }
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void onDeletePressed() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("Ar tikrai norite ištrinti?");
+        alertDialog.setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                deleteRecipe();
+            }
+        });
+        alertDialog.setNegativeButton("NE", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialog.show();
     }
 
     @Override

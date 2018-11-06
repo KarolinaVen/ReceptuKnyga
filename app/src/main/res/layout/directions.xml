@@ -12,6 +12,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:imeOptions="actionDone"
+        android:inputType="textNoSuggestions|textMultiLine"
         android:padding="5dp" />
 
     <ImageButton
@@ -19,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_clear_black"
-        android:padding="5dp"
-        android:onClick="removeDirection"/>
-
+        android:onClick="removeDirection"
+        android:padding="5dp" />
 </LinearLayout>

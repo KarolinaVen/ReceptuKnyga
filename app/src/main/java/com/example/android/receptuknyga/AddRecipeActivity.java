@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +71,9 @@ public class AddRecipeActivity extends AppCompatActivity {
     int recipeId;
     int measurementSystemId = 1;
 
+    private Toast toast;
+    private long lastBackPressTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,19 +92,33 @@ public class AddRecipeActivity extends AppCompatActivity {
         metricRadioButton = findViewById(R.id.metricSystem);
         usRadioButton = findViewById(R.id.usSystem);
         recipeNameInput = findViewById(R.id.recipe_title2);
-        yield = findViewById(R.id.yield);
         comments = findViewById(R.id.comments);
         source = findViewById(R.id.source);
-        preparationHours = findViewById(R.id.preparationHours);
-        preparationMinutes = findViewById(R.id.preparationMinutes);
-        cookingHours = findViewById(R.id.cookingHours);
-        cookingMinutes = findViewById(R.id.cookingMinutes);
-        ratingBar = findViewById(R.id.ratingBar);
         directions_layout = findViewById(R.id.directions_layout);
         add_ingredients_layout = findViewById(R.id.add_ingredients_layout);
         directionsEditText = findViewById(R.id.directions_edit_text);
         ingredientsEditText = findViewById(R.id.ingredients_edit_text);
         ingredientsNumber = findViewById(R.id.ingredients_number);
+
+        yield = findViewById(R.id.yield);
+        yield.setTransformationMethod(null);
+
+        preparationHours = findViewById(R.id.preparationHours);
+        preparationHours.setTransformationMethod(null);
+
+        preparationMinutes = findViewById(R.id.preparationMinutes);
+        preparationMinutes.setTransformationMethod(null);
+
+        cookingHours = findViewById(R.id.cookingHours);
+        cookingHours.setTransformationMethod(null);
+
+        cookingMinutes = findViewById(R.id.cookingMinutes);
+        cookingMinutes.setTransformationMethod(null);
+
+        ratingBar = findViewById(R.id.ratingBar);
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
 
         imageViewPhoto = findViewById(R.id.add_photo_id);
         imageViewPhoto.setOnClickListener(choosePhoto);
@@ -106,6 +128,11 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            myToolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        }
 
         categorySpinner = findViewById(R.id.category);
         categorySpinner();
@@ -178,6 +205,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                     categoryItem = parent.getItemAtPosition(position).toString();
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -202,7 +230,9 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     public void addIngredient(RecipeIngredient ingredient, int id) {
         Log.i(TAG, "addIngirient called with: " + ingredient);
+
         View view = LayoutInflater.from(this).inflate(R.layout.ingridients, add_ingredients_layout, false);
+
         Spinner ingredientsSpinner = view.findViewById(R.id.measurement_spinner);
 
         ImageButton clearIngredientButton = view.findViewById(R.id.clear_ingredient_button);
@@ -221,7 +251,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         } else {
             spinnerMeasurement(ingredientsSpinner, null, id);
         }
-
         add_ingredients_layout.addView(view);
     }
 
@@ -315,7 +344,8 @@ public class AddRecipeActivity extends AppCompatActivity {
             } catch (NumberFormatException ex) {
                 System.err.println("Wrong input");
             }
-        } else if (preparationHours.getText().toString().trim().length() == 0 && preparationMinutes.getText().toString().trim().length() == 0) {
+        } else if (preparationHours.getText().toString().trim().length() == 0
+                && preparationMinutes.getText().toString().trim().length() == 0) {
             String hourValue = "0";
             String minuteValue = "0";
             try {
@@ -349,7 +379,8 @@ public class AddRecipeActivity extends AppCompatActivity {
             } catch (NumberFormatException ex) {
                 System.err.println("Wrong input");
             }
-        } else if (cookingHours.getText().toString().trim().length() == 0 && cookingMinutes.getText().toString().trim().length() == 0) {
+        } else if (cookingHours.getText().toString().trim().length() == 0
+                && cookingMinutes.getText().toString().trim().length() == 0) {
             String minuteValue = "0";
             String hourValue = "0";
             try {
@@ -391,6 +422,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         recipeResult.setCategory(categoryItem);
         recipeResult.setPreparationTime(preparationTime());
         recipeResult.setCookingTime(cookingTime());
+        recipeResult.setComments(comments.getText().toString());
+        recipeResult.setSource(source.getText().toString());
+        recipeResult.setMeasurementSystemId(measurementSystemId);
+
         if (yield.getText().toString().trim().length() == 0) {
             String yieldCount = "0";
             try {
@@ -401,39 +436,96 @@ public class AddRecipeActivity extends AppCompatActivity {
         } else {
             recipeResult.setYield(Integer.parseInt(yield.getText().toString()));
         }
-        recipeResult.setComments(comments.getText().toString());
-        recipeResult.setSource(source.getText().toString());
-        recipeResult.setMeasurementSystemId(measurementSystemId);
+
         return recipeResult;
     }
 
     public ArrayList<RecipeIngredient> saveAllIngredients(int recipeId) {
         int childCount = add_ingredients_layout.getChildCount();
+
         ArrayList<RecipeIngredient> ingredientsList = new ArrayList<>();
+
         for (int i = 0; i < childCount; i++) {
             RecipeIngredient recipeIngredients = new RecipeIngredient();
+
             View view = add_ingredients_layout.getChildAt(i);
+
             EditText nameInput = view.findViewById(R.id.ingredients_edit_text);
-            recipeIngredients.setIngredientName(nameInput.getText().toString());
-            EditText amountInput = view.findViewById(R.id.ingredients_number);
-            recipeIngredients.setIngredientAmount(Double.parseDouble(amountInput.getText().toString()));
             Spinner choice = view.findViewById(R.id.measurement_spinner);
-            String measurementName = choice.getSelectedItem().toString();
-            recipeIngredients.setMeasurementId(appDatabase.measurementDao().nameToId(measurementName));
+            EditText amountInput = view.findViewById(R.id.ingredients_number);
+
+            if (amountInput.getText().toString().trim().length() == 0
+                    && nameInput.getText().toString().trim().length() == 0
+                    && choice.getSelectedItem() == null) {
+                continue;
+            } else {
+                if (amountInput.getText().toString().trim().length() == 0) {
+                    Double amount = 0.0;
+                    recipeIngredients.setIngredientAmount(amount);
+                } else {
+                    recipeIngredients.setIngredientAmount(Double.parseDouble(amountInput.getText().toString()));
+                }
+
+                if (nameInput.getText().toString().trim().length() == 0) {
+                    String name = "-";
+                    recipeIngredients.setIngredientName(name);
+                } else {
+                    recipeIngredients.setIngredientName(nameInput.getText().toString());
+                }
+
+                if (choice.getSelectedItem() == null) {
+                    String measurement = "vnt.";
+                    recipeIngredients.setMeasurementId(appDatabase.measurementDao().nameToId(measurement));
+                } else {
+                    String measurementName = choice.getSelectedItem().toString();
+                    recipeIngredients.setMeasurementId(appDatabase.measurementDao().nameToId(measurementName));
+                }
+            }
+
             recipeIngredients.setRecipeId(recipeId);
             ingredientsList.add(recipeIngredients);
         }
         return ingredientsList;
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
+            toast = Toast.makeText(this, "Spauskite dar kartą, kad grįžtumėte", Toast.LENGTH_SHORT);
+            toast.show();
+            this.lastBackPressTime = System.currentTimeMillis();
+        } else {
+            if (toast != null) {
+                toast.cancel();
+            }
+            super.onBackPressed();
+        }
+    }
+
     public ArrayList<RecipeDirections> saveAllDirections(int recipeId) {
         int childCount = directions_layout.getChildCount();
+
         ArrayList<RecipeDirections> directionsList = new ArrayList<>();
+
         for (int i = 0; i < childCount; i++) {
             RecipeDirections recipeDirections = new RecipeDirections();
+
             View view = directions_layout.getChildAt(i);
+
             EditText directionsInput = view.findViewById(R.id.directions_edit_text);
-            recipeDirections.setDirections(directionsInput.getText().toString());
+
+            if (directionsInput.getText().toString().trim().length() == 0) {
+                continue;
+            } else {
+                recipeDirections.setDirections(directionsInput.getText().toString());
+            }
+
             recipeDirections.setRecipeId(recipeId);
             directionsList.add(recipeDirections);
         }
@@ -444,6 +536,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         final ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(
                 this, R.array.categories, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         fullRecipe.observe(this, new Observer<FullRecipe>() {
             @Override
             public void onChanged(@Nullable FullRecipe fullRecipe) {
@@ -452,11 +545,13 @@ public class AddRecipeActivity extends AppCompatActivity {
                     yourSelectedImage = BitmapFactory.decodeFile(fullRecipe.recipe.getImagePath());
                     imageViewPhoto.setImageBitmap(yourSelectedImage);
                     int system = fullRecipe.recipe.measurementSystemId;
+
                     if (system == 1) {
                         metricRadioButton.setChecked(true);
                     } else {
                         usRadioButton.setChecked(true);
                     }
+
                     ratingBar.setRating(fullRecipe.recipe.getRating());
                     categorySpinner.setAdapter(categoryAdapter);
                     String compareCategorySpinner = fullRecipe.recipe.getCategory();
@@ -470,10 +565,13 @@ public class AddRecipeActivity extends AppCompatActivity {
                     comments.setText(fullRecipe.recipe.getComments());
                     source.setText(fullRecipe.recipe.getSource());
                     filePath = fullRecipe.recipe.getImagePath();
+
                     int id = fullRecipe.recipe.getMeasurementSystemId();
+
                     for (RecipeIngredient ingredient : fullRecipe.recipeIngredient) {
                         addIngredient(ingredient, id);
                     }
+
                     for (RecipeDirections directions : fullRecipe.recipeDirections) {
                         addDirection(directions);
                     }

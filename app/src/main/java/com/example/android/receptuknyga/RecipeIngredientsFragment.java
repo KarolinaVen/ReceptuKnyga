@@ -59,7 +59,6 @@ public class RecipeIngredientsFragment extends Fragment {
         appDatabase = AppDatabase.getInstance(view.getContext());
 
         calculation = view.findViewById(R.id.calculation);
-
         diameter = view.findViewById(R.id.diameter);
         height = view.findViewById(R.id.height);
         length = view.findViewById(R.id.length);
@@ -85,7 +84,6 @@ public class RecipeIngredientsFragment extends Fragment {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                 if (checkedId == R.id.metric_system_fragment) {
                     changeSystem(MeasurementSystem.ID_METRIC);
                     calculation.setOnClickListener(new View.OnClickListener() {

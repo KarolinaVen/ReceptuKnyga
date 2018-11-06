@@ -12,21 +12,28 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
+        android:imeOptions="actionDone"
+        android:inputType="textNoSuggestions|textMultiLine"
         android:padding="5dp" />
 
     <EditText
         android:id="@+id/ingredients_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
+        android:digits="0123456789."
+        android:imeOptions="actionDone"
         android:inputType="phone"
-        android:padding="5dp" />
+        android:maxLength="6"
+        android:padding="5dp"
+        android:textAlignment="center" />
 
     <Spinner
         android:id="@+id/measurement_spinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:dropDownSelector="@color/colorAccent"
         android:padding="5dp"
         android:prompt="@string/vnt"
         android:spinnerMode="dropdown" />
