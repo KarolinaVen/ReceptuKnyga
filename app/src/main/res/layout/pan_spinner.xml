@@ -14,7 +14,7 @@
         android:paddingEnd="7dp"
         android:paddingBottom="5dp"
         android:singleLine="true"
-        android:text="@string/shape"
+        android:text="Kepimo forma"
         android:textColor="#6E6E6E"
         android:textSize="15sp"
         android:textStyle="bold" />

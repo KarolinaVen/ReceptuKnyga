@@ -14,7 +14,8 @@
         android:layout_weight="3"
         android:imeOptions="actionDone"
         android:inputType="textNoSuggestions|textMultiLine"
-        android:padding="5dp" />
+        android:padding="5dp"
+        android:singleLine="false" />
 
     <EditText
         android:id="@+id/ingredients_number"

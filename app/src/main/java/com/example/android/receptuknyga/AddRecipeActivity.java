@@ -2,6 +2,7 @@ package com.example.android.receptuknyga;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,12 +16,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -31,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -51,8 +56,6 @@ public class AddRecipeActivity extends AppCompatActivity {
     EditText comments;
     EditText source;
     EditText recipeNameInput;
-    EditText directionsEditText;
-    EditText ingredientsEditText;
     EditText ingredientsNumber;
     String filePath;
     String categoryItem;
@@ -91,13 +94,19 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         metricRadioButton = findViewById(R.id.metricSystem);
         usRadioButton = findViewById(R.id.usSystem);
+
         recipeNameInput = findViewById(R.id.recipe_title2);
+        enterButton(recipeNameInput);
+
         comments = findViewById(R.id.comments);
+        enterButton(comments);
+
         source = findViewById(R.id.source);
+        enterButton(source);
+
         directions_layout = findViewById(R.id.directions_layout);
         add_ingredients_layout = findViewById(R.id.add_ingredients_layout);
-        directionsEditText = findViewById(R.id.directions_edit_text);
-        ingredientsEditText = findViewById(R.id.ingredients_edit_text);
+
         ingredientsNumber = findViewById(R.id.ingredients_number);
 
         yield = findViewById(R.id.yield);
@@ -228,6 +237,21 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
     }
 
+    public void enterButton(final EditText editText) {
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    editText.setSelection(0);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+    }
+
     public void addIngredient(RecipeIngredient ingredient, int id) {
         Log.i(TAG, "addIngirient called with: " + ingredient);
 
@@ -238,8 +262,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         ImageButton clearIngredientButton = view.findViewById(R.id.clear_ingredient_button);
         clearIngredientButton.setOnClickListener(remove);
 
+        EditText nameInput = view.findViewById(R.id.ingredients_edit_text);
+
         if (ingredient != null) {
-            EditText nameInput = view.findViewById(R.id.ingredients_edit_text);
+
             nameInput.setText(ingredient.getIngredientName());
 
             EditText amountInput = view.findViewById(R.id.ingredients_number);
@@ -252,6 +278,13 @@ public class AddRecipeActivity extends AppCompatActivity {
             spinnerMeasurement(ingredientsSpinner, null, id);
         }
         add_ingredients_layout.addView(view);
+        enterButton(nameInput);
+
+//        nameInput.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+//        nameInput.setSingleLine(false);
+
+
+
     }
 
     public void addDirection(RecipeDirections recipeDirections) {
@@ -259,12 +292,17 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         ImageButton clearDirectionButton = view.findViewById(R.id.clear_direction_button);
         clearDirectionButton.setOnClickListener(removeDirection);
+        EditText directionsInput = view.findViewById(R.id.directions_edit_text);
 
         if (recipeDirections != null) {
-            EditText directionsInput = view.findViewById(R.id.directions_edit_text);
+
             directionsInput.setText(recipeDirections.getDirections());
         }
         directions_layout.addView(view);
+        enterButton(directionsInput);
+
+//        directionsInput.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+//        directionsInput.setSingleLine(false);
     }
 
     @Override
@@ -424,7 +462,13 @@ public class AddRecipeActivity extends AppCompatActivity {
         recipeResult.setCookingTime(cookingTime());
         recipeResult.setComments(comments.getText().toString());
         recipeResult.setSource(source.getText().toString());
-        recipeResult.setMeasurementSystemId(measurementSystemId);
+
+        if(metricRadioButton.isChecked()){
+            recipeResult.setMeasurementSystemId(1);
+        } else {
+            recipeResult.setMeasurementSystemId(2);
+        }
+
 
         if (yield.getText().toString().trim().length() == 0) {
             String yieldCount = "0";
@@ -481,7 +525,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                     recipeIngredients.setMeasurementId(appDatabase.measurementDao().nameToId(measurementName));
                 }
             }
-
             recipeIngredients.setRecipeId(recipeId);
             ingredientsList.add(recipeIngredients);
         }
@@ -544,13 +587,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                     recipeNameInput.setText(fullRecipe.recipe.getRecipeName());
                     yourSelectedImage = BitmapFactory.decodeFile(fullRecipe.recipe.getImagePath());
                     imageViewPhoto.setImageBitmap(yourSelectedImage);
-                    int system = fullRecipe.recipe.measurementSystemId;
-
-                    if (system == 1) {
-                        metricRadioButton.setChecked(true);
-                    } else {
-                        usRadioButton.setChecked(true);
-                    }
+                    int id = fullRecipe.recipe.getMeasurementSystemId();
 
                     ratingBar.setRating(fullRecipe.recipe.getRating());
                     categorySpinner.setAdapter(categoryAdapter);
@@ -566,7 +603,18 @@ public class AddRecipeActivity extends AppCompatActivity {
                     source.setText(fullRecipe.recipe.getSource());
                     filePath = fullRecipe.recipe.getImagePath();
 
-                    int id = fullRecipe.recipe.getMeasurementSystemId();
+
+                    if (id == 1) {
+                        metricRadioButton.setChecked(true);
+                        metricRadioButton.setClickable(false);
+                        usRadioButton.setClickable(false);
+                        usRadioButton.setAlpha(0.45f);
+                    } else {
+                        usRadioButton.setChecked(true);
+                        metricRadioButton.setClickable(false);
+                        metricRadioButton.setAlpha(0.45f);
+                        usRadioButton.setClickable(false);
+                    }
 
                     for (RecipeIngredient ingredient : fullRecipe.recipeIngredient) {
                         addIngredient(ingredient, id);

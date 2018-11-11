@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -29,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.android.receptuknyga.List.RecipeListAdapter;
 
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         categorySpinner();
 
         searchName = findViewById(R.id.searchNameEditText);
+        enterButton(searchName);
 
         searchButton = findViewById(R.id.searchButton);
         searchButton.setOnClickListener(searchRecipe);
@@ -220,6 +223,21 @@ public class MainActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         }
+    }
+
+    public void enterButton(final EditText editText) {
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    editText.setSelection(0);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
     }
 
     public View.OnClickListener searchRecipe = new View.OnClickListener() {

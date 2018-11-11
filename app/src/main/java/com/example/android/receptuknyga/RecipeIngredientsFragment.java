@@ -204,12 +204,14 @@ public class RecipeIngredientsFragment extends Fragment {
             double scaleFactor = circleVolume2 / circleVolume;
             double ingredient = recipeIngredient.getIngredientAmount();
             double answer = ingredient * scaleFactor;
+
             recipeIngredientCopy.setIngredientAmount(answer);
             if (ingredientSystemId == systemId) {
                 return recipeIngredientCopy;
             } else {
                 return Converters.convertIngredient(recipeIngredientCopy);
             }
+
         } else if (panItem.equals("Apvali") && panItem2.equals("Kvadratinė")) {
             double circleVolume = circleVolume(panDiameter, panHeight);
             double squareVolume2 = squareVolume(panHeight2, panLength2, panBreadth2);
@@ -250,11 +252,19 @@ public class RecipeIngredientsFragment extends Fragment {
     }
 
     public double circleVolume(String panDiameter, String panHeight) {
-        return 3.14 * ((Double.valueOf(panDiameter) / 2) * (Double.valueOf(panDiameter) / 2)) * Double.valueOf(panHeight);
+        if (panDiameter.trim().length() == 0 || panHeight.trim().length() == 0) {
+            return 0.0;
+        } else {
+            return 3.14 * ((Double.valueOf(panDiameter) / 2) * (Double.valueOf(panDiameter) / 2)) * Double.valueOf(panHeight);
+        }
     }
 
     public double squareVolume(String panHeight, String panLength, String panBreadth) {
-        return Double.valueOf(panLength) * Double.valueOf(panBreadth) * Double.valueOf(panHeight);
+        if (panHeight.trim().length() == 0 || panLength.trim().length() == 0 || panBreadth.trim().length() == 0) {
+            return 0.0;
+        } else {
+            return Double.valueOf(panLength) * Double.valueOf(panBreadth) * Double.valueOf(panHeight);
+        }
     }
 
     @SuppressWarnings("ConstantConditions")

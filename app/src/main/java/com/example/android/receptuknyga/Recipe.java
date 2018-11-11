@@ -21,6 +21,51 @@ public class Recipe {
     private String source;
     private String category;
     int measurementSystemId;
+    int diameter;
+    int height;
+    int length;
+    int breadth;
+    String pan;
+
+    public String getPan() {
+        return pan;
+    }
+
+    public void setPan(String pan) {
+        this.pan = pan;
+    }
+
+    public int getDiameter() {
+        return diameter;
+    }
+
+    public void setDiameter(int diameter) {
+        this.diameter = diameter;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getBreadth() {
+        return breadth;
+    }
+
+    public void setBreadth(int breadth) {
+        this.breadth = breadth;
+    }
 
     public int getMeasurementSystemId() {
         return measurementSystemId;
