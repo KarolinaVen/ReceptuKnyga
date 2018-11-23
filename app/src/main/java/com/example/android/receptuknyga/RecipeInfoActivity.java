@@ -14,12 +14,8 @@ import android.util.Log;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class RecipeInfoActivity extends AppCompatActivity {
-
-    private Toast toast;
-    private long lastBackPressTime = 0;
 
     private static final String TAG = "RecipeInfoActivity";
 
@@ -80,20 +76,6 @@ public class RecipeInfoActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
-            toast = Toast.makeText(this, "Spauskite dar kartą, kad grįžtumėte", Toast.LENGTH_SHORT);
-            toast.show();
-            this.lastBackPressTime = System.currentTimeMillis();
-        } else {
-            if (toast != null) {
-                toast.cancel();
-            }
-            super.onBackPressed();
-        }
     }
 
     @Override

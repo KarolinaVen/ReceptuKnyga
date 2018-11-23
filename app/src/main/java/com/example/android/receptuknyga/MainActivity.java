@@ -158,6 +158,27 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void searchIngredient() {
+        final LiveData<List<Recipe>> searchIngredient =
+                AppDatabase.getInstance(getApplicationContext()).recipeDao().
+                        ingredientName(searchName.getText().toString());
+
+        RecyclerView recyclerView = findViewById(R.id.recipeMainView);
+        final RecipeListAdapter adapter = new RecipeListAdapter(this);
+
+        searchIngredient.observe(this, new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(@Nullable List<Recipe> recipes) {
+                adapter.setRecipes(recipes);
+            }
+        });
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+
     public void search() {
         final LiveData<List<Recipe>> searchRecipe =
                 AppDatabase.getInstance(getApplicationContext()).recipeDao().
@@ -248,7 +269,9 @@ public class MainActivity extends AppCompatActivity {
             if (imm != null) {
                 imm.hideSoftInputFromWindow(searchName.getWindowToken(), 0);
             }
-            search();
+//            search();
+            searchIngredient();
+
             searchName.getText().clear();
         }
     };

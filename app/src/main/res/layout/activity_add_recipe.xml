@@ -391,7 +391,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ingredients_text_view"
                     android:layout_margin="5dp"
-                    android:orientation="vertical" />
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:onClick="onIngredientClick"/>
 
                 <LinearLayout
                     android:id="@+id/ingredients_text_layout2"

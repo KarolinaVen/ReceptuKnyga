@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_below="@id/ingredients_layout"
     android:layout_margin="1dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    >
 
     <EditText
         android:id="@+id/ingredients_edit_text"

@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Receptų Knyga</string>
     <string name="home_screen">Visi receptai</string>
-    <string name="new_recipe">Pridėti receptą</string>
+    <string name="new_recipe">Naujas receptas</string>
     <string name="search_recipe">Receptų paieška</string>
-    <string name="add_recipe">Sukurti receptą</string>
+    <string name="add_recipe">Naujas receptas</string>
     <string name="title">Pavadinimas</string>
     <string name="rating">Įvertinimas</string>
     <string name="category">Kategorija</string>

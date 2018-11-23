@@ -20,6 +20,9 @@ public interface RecipeDao {
     @Query("SELECT * FROM Recipe WHERE recipeName LIKE '%' || :recipeName || '%' ORDER BY recipeId DESC")
     LiveData<List<Recipe>> recipeName(String recipeName);
 
+    @Query("SELECT * FROM Recipe, RecipeIngredient WHERE Recipe.recipeId = RecipeIngredient.recipeId AND ingredientName LIKE '%' || :ingredientName || '%'")
+    LiveData<List<Recipe>> ingredientName(String ingredientName);
+
     @Query("SELECT * FROM Recipe WHERE category = :category")
     LiveData<List<Recipe>> recipesByCategory(String category);
 

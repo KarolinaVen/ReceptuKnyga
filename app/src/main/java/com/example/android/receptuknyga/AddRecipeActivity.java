@@ -70,6 +70,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     RadioButton metricRadioButton;
     RadioButton usRadioButton;
     Toolbar myToolbar;
+    Boolean ingredientClicked = false;
 
     int recipeId;
     int measurementSystemId = 1;
@@ -280,10 +281,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         add_ingredients_layout.addView(view);
         enterButton(nameInput);
 
-//        nameInput.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-//        nameInput.setSingleLine(false);
+    }
 
-
+    public void onIngredientClick(){
+        add_ingredients_layout.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
     }
 
@@ -300,9 +301,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
         directions_layout.addView(view);
         enterButton(directionsInput);
-
-//        directionsInput.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-//        directionsInput.setSingleLine(false);
     }
 
     @Override
