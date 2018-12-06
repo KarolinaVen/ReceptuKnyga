@@ -21,6 +21,11 @@
             android:id="@+id/categorySearch"
             android:icon="@drawable/ic_search"
             android:onClick="onOptionsItemSelected"
-            android:title="Kategorijų paieška" />
+            android:title="@string/category_search" />
+        <item
+            android:id="@+id/ingredientSearch"
+            android:icon="@drawable/ic_search"
+            android:onClick="onOptionsItemSelected"
+            android:title="@string/ingredient_search" />
     </group>
 </menu>

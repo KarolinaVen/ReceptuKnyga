@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -16,8 +17,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +39,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +59,12 @@ public class AddRecipeActivity extends AppCompatActivity {
     EditText source;
     EditText recipeNameInput;
     EditText ingredientsNumber;
+    EditText panDiameter;
+    EditText panHeight;
+    EditText panLength;
+    EditText panBreadth;
     String filePath;
+    String panItem;
     String categoryItem;
     Bitmap yourSelectedImage;
     RatingBar ratingBar;
@@ -66,11 +73,11 @@ public class AddRecipeActivity extends AppCompatActivity {
     ImageButton addDirectionButton;
     ImageButton addIngredientButton;
     Spinner categorySpinner;
+    Spinner panSpinner;
     LiveData<FullRecipe> fullRecipe;
     RadioButton metricRadioButton;
     RadioButton usRadioButton;
     Toolbar myToolbar;
-    Boolean ingredientClicked = false;
 
     int recipeId;
     int measurementSystemId = 1;
@@ -86,6 +93,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         recipeId = getIntent().getIntExtra("id", -1);
+
         appDatabase = AppDatabase.getInstance(getApplicationContext());
 
         if (recipeId != -1) {
@@ -95,6 +103,13 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         metricRadioButton = findViewById(R.id.metricSystem);
         usRadioButton = findViewById(R.id.usSystem);
+        directions_layout = findViewById(R.id.directions_layout);
+        add_ingredients_layout = findViewById(R.id.add_ingredients_layout);
+        ingredientsNumber = findViewById(R.id.ingredients_number);
+        panBreadth = findViewById(R.id.pan_breadth);
+        panDiameter = findViewById(R.id.pan_diameter);
+        panHeight = findViewById(R.id.pan_height);
+        panLength = findViewById(R.id.pan_length);
 
         recipeNameInput = findViewById(R.id.recipe_title2);
         enterButton(recipeNameInput);
@@ -104,11 +119,6 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         source = findViewById(R.id.source);
         enterButton(source);
-
-        directions_layout = findViewById(R.id.directions_layout);
-        add_ingredients_layout = findViewById(R.id.add_ingredients_layout);
-
-        ingredientsNumber = findViewById(R.id.ingredients_number);
 
         yield = findViewById(R.id.yield);
         yield.setTransformationMethod(null);
@@ -128,7 +138,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.ratingBar);
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
-        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
 
         imageViewPhoto = findViewById(R.id.add_photo_id);
         imageViewPhoto.setOnClickListener(choosePhoto);
@@ -147,6 +156,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         categorySpinner = findViewById(R.id.category);
         categorySpinner();
 
+        panSpinner = findViewById(R.id.pan_spinner);
+        panSpinner();
+
         addDirectionButton = findViewById(R.id.addDirectionButton);
         addDirectionButton.setOnClickListener(directions);
     }
@@ -164,6 +176,10 @@ public class AddRecipeActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public String normalized(String text){
+        return Normalizer.normalize(text, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 
     @Override
@@ -213,6 +229,44 @@ public class AddRecipeActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     categoryItem = parent.getItemAtPosition(position).toString();
+                    ((TextView) parent.getChildAt(0)).setTypeface(null, Typeface.BOLD);
+                    ((TextView) parent.getChildAt(0)).setTextColor(Color.parseColor("#6E6E6E"));
+                    ((TextView) parent.getChildAt(0)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
+    public void panSpinner() {
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.pan, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        panSpinner.setPrompt("Forma");
+        panSpinner.setAdapter(new NothingSelectedSpinnerAdapter(
+                adapter, R.layout.pan_spinner, this));
+        panSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    panItem = parent.getItemAtPosition(position).toString();
+                    ((TextView) parent.getChildAt(0)).setTypeface(null, Typeface.BOLD);
+                    ((TextView) parent.getChildAt(0)).setTextColor(Color.parseColor("#6E6E6E"));
+                    ((TextView) parent.getChildAt(0)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                    if (panItem.equals("Apvali forma")) {
+                        panDiameter.setVisibility(View.VISIBLE);
+                        panHeight.setVisibility(View.VISIBLE);
+                        panLength.setVisibility(View.GONE);
+                        panBreadth.setVisibility(View.GONE);
+                    } else {
+                        panLength.setVisibility(View.VISIBLE);
+                        panHeight.setVisibility(View.VISIBLE);
+                        panBreadth.setVisibility(View.VISIBLE);
+                        panDiameter.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -233,6 +287,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 adapter1, R.layout.contact_spinner_row_nothing_selected_measurement, this));
 
         if (selection != null) {
+
             final int selectedPos = adapter1.getPosition(selection) + 1;
             ingredientsSpinner.setSelection(selectedPos);
         }
@@ -280,12 +335,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
         add_ingredients_layout.addView(view);
         enterButton(nameInput);
-
-    }
-
-    public void onIngredientClick(){
-        add_ingredients_layout.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-
     }
 
     public void addDirection(RecipeDirections recipeDirections) {
@@ -293,6 +342,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         ImageButton clearDirectionButton = view.findViewById(R.id.clear_direction_button);
         clearDirectionButton.setOnClickListener(removeDirection);
+
         EditText directionsInput = view.findViewById(R.id.directions_edit_text);
 
         if (recipeDirections != null) {
@@ -453,6 +503,9 @@ public class AddRecipeActivity extends AppCompatActivity {
     public Recipe buildRecipe() {
         Recipe recipeResult = new Recipe();
         recipeResult.setRecipeName(recipeNameInput.getText().toString());
+        String recipeNameASCII = Normalizer.normalize(recipeNameInput.getText().toString(), Normalizer.Form.NFD).
+                replaceAll("[^\\p{ASCII}]", "");
+        recipeResult.setRecipeNameASCII(recipeNameASCII);
         recipeResult.setImagePath(filePath);
         recipeResult.setRating(ratingBar.getRating());
         recipeResult.setCategory(categoryItem);
@@ -461,12 +514,56 @@ public class AddRecipeActivity extends AppCompatActivity {
         recipeResult.setComments(comments.getText().toString());
         recipeResult.setSource(source.getText().toString());
 
-        if(metricRadioButton.isChecked()){
+        if (metricRadioButton.isChecked()) {
             recipeResult.setMeasurementSystemId(1);
         } else {
             recipeResult.setMeasurementSystemId(2);
         }
+        recipeResult.setPan(panItem);
 
+        if (panLength.getText().toString().trim().length() == 0) {
+            String panCount = "0";
+            try {
+                recipeResult.setLength(Integer.parseInt(panCount));
+            } catch (NumberFormatException ex) {
+                System.err.println("Wrong input");
+            }
+        } else {
+            recipeResult.setLength(Integer.parseInt(panLength.getText().toString()));
+        }
+
+        if (panHeight.getText().toString().trim().length() == 0) {
+            String panCount = "0";
+            try {
+                recipeResult.setHeight(Integer.parseInt(panCount));
+            } catch (NumberFormatException ex) {
+                System.err.println("Wrong input");
+            }
+        } else {
+            recipeResult.setHeight(Integer.parseInt(panHeight.getText().toString()));
+        }
+
+        if (panDiameter.getText().toString().trim().length() == 0) {
+            String panCount = "0";
+            try {
+                recipeResult.setDiameter(Integer.parseInt(panCount));
+            } catch (NumberFormatException ex) {
+                System.err.println("Wrong input");
+            }
+        } else {
+            recipeResult.setDiameter(Integer.parseInt(panDiameter.getText().toString()));
+        }
+
+        if (panBreadth.getText().toString().trim().length() == 0) {
+            String panCount = "0";
+            try {
+                recipeResult.setBreadth(Integer.parseInt(panCount));
+            } catch (NumberFormatException ex) {
+                System.err.println("Wrong input");
+            }
+        } else {
+            recipeResult.setBreadth(Integer.parseInt(panBreadth.getText().toString()));
+        }
 
         if (yield.getText().toString().trim().length() == 0) {
             String yieldCount = "0";
@@ -484,6 +581,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     public ArrayList<RecipeIngredient> saveAllIngredients(int recipeId) {
         int childCount = add_ingredients_layout.getChildCount();
+        int number = 1;
 
         ArrayList<RecipeIngredient> ingredientsList = new ArrayList<>();
 
@@ -501,6 +599,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                     && choice.getSelectedItem() == null) {
                 continue;
             } else {
+                recipeIngredients.setNumber(number);
+                number++;
                 if (amountInput.getText().toString().trim().length() == 0) {
                     Double amount = 0.0;
                     recipeIngredients.setIngredientAmount(amount);
@@ -513,6 +613,9 @@ public class AddRecipeActivity extends AppCompatActivity {
                     recipeIngredients.setIngredientName(name);
                 } else {
                     recipeIngredients.setIngredientName(nameInput.getText().toString());
+                    String ingredientASCII = Normalizer.normalize(nameInput.getText().toString(), Normalizer.Form.NFD).
+                            replaceAll("[^\\p{ASCII}]", "");
+                    recipeIngredients.setIngredientNameASCII(ingredientASCII);
                 }
 
                 if (choice.getSelectedItem() == null) {
@@ -552,6 +655,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     public ArrayList<RecipeDirections> saveAllDirections(int recipeId) {
         int childCount = directions_layout.getChildCount();
 
+        int number = 1;
         ArrayList<RecipeDirections> directionsList = new ArrayList<>();
 
         for (int i = 0; i < childCount; i++) {
@@ -564,9 +668,10 @@ public class AddRecipeActivity extends AppCompatActivity {
             if (directionsInput.getText().toString().trim().length() == 0) {
                 continue;
             } else {
+                recipeDirections.setDirectionsNumber(number);
+                number++;
                 recipeDirections.setDirections(directionsInput.getText().toString());
             }
-
             recipeDirections.setRecipeId(recipeId);
             directionsList.add(recipeDirections);
         }
@@ -578,6 +683,10 @@ public class AddRecipeActivity extends AppCompatActivity {
                 this, R.array.categories, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.pan, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         fullRecipe.observe(this, new Observer<FullRecipe>() {
             @Override
             public void onChanged(@Nullable FullRecipe fullRecipe) {
@@ -585,13 +694,41 @@ public class AddRecipeActivity extends AppCompatActivity {
                     recipeNameInput.setText(fullRecipe.recipe.getRecipeName());
                     yourSelectedImage = BitmapFactory.decodeFile(fullRecipe.recipe.getImagePath());
                     imageViewPhoto.setImageBitmap(yourSelectedImage);
+
                     int id = fullRecipe.recipe.getMeasurementSystemId();
 
                     ratingBar.setRating(fullRecipe.recipe.getRating());
                     categorySpinner.setAdapter(categoryAdapter);
+                    panSpinner.setAdapter(adapter);
+
                     String compareCategorySpinner = fullRecipe.recipe.getCategory();
+                    String comparePanSpinner = fullRecipe.recipe.getPan();
+
                     int spinnerPosition = categoryAdapter.getPosition(compareCategorySpinner);
+                    int panSpinnerPosition = adapter.getPosition(comparePanSpinner);
+
                     categorySpinner.setSelection(spinnerPosition);
+                    panSpinner.setSelection(panSpinnerPosition);
+
+                    if(comparePanSpinner == null){
+                        panSpinner();
+                    } else if (comparePanSpinner.equals("Apvali forma")) {
+                        panDiameter.setVisibility(View.VISIBLE);
+                        panHeight.setVisibility(View.VISIBLE);
+                        panLength.setVisibility(View.GONE);
+                        panBreadth.setVisibility(View.GONE);
+                        panDiameter.setText(String.valueOf(fullRecipe.recipe.getDiameter()));
+                        panHeight.setText(String.valueOf(fullRecipe.recipe.getHeight()));
+                    } else if (comparePanSpinner.equals("Kvadratinė forma")) {
+                        panLength.setVisibility(View.VISIBLE);
+                        panHeight.setVisibility(View.VISIBLE);
+                        panBreadth.setVisibility(View.VISIBLE);
+                        panDiameter.setVisibility(View.GONE);
+                        panHeight.setText(String.valueOf(fullRecipe.recipe.getHeight()));
+                        panBreadth.setText(String.valueOf(fullRecipe.recipe.getBreadth()));
+                        panLength.setText(String.valueOf(fullRecipe.recipe.getLength()));
+                    }
+
                     preparationHours.setText(String.valueOf(fullRecipe.recipe.getPreparationTime() / 60));
                     preparationMinutes.setText(String.valueOf(fullRecipe.recipe.getPreparationTime() % 60));
                     cookingHours.setText(String.valueOf(fullRecipe.recipe.getCookingTime() / 60));
@@ -600,7 +737,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                     comments.setText(fullRecipe.recipe.getComments());
                     source.setText(fullRecipe.recipe.getSource());
                     filePath = fullRecipe.recipe.getImagePath();
-
 
                     if (id == 1) {
                         metricRadioButton.setChecked(true);

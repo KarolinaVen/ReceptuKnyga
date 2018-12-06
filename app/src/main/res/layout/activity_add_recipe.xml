@@ -3,8 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -22,6 +21,7 @@
         android:layout_height="fill_parent"
         android:layout_below="@id/my_toolbar"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:scrollbarSize="5dp"
         android:scrollbarThumbVertical="@color/colorPrimaryDark">
@@ -35,8 +35,12 @@
                 android:id="@+id/recipe_title_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_shadow">
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp">
 
                 <TextView
                     android:id="@+id/recipe_title"
@@ -62,28 +66,33 @@
                     android:paddingStart="7dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="7dp"
-                    android:paddingBottom="5dp" />
+                    android:paddingBottom="5dp"
+                    android:textSize="15sp" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/add_photo_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/recipe_title_layout"
-                android:layout_margin="10dp">
+                android:layout_below="@id/recipe_title_layout">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/add_photo_id"
                     android:layout_width="wrap_content"
                     android:layout_height="250dp"
                     android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/rounded_shadow"
+                    android:background="@drawable/round_corners"
+                    android:elevation="3dp"
                     android:minWidth="250dp"
                     android:onClick="choosePhoto"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_add_pic"
-                    app:riv_corner_radius="15dp" />
+                    app:riv_corner_radius="5dp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -91,8 +100,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/add_photo_layout"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_shadow">
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp">
 
                 <TextView
                     android:id="@+id/rating_text_view"
@@ -125,8 +138,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rating_layout"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_shadow">
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp">
 
                 <Spinner
                     android:id="@+id/category"
@@ -141,15 +158,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/category_layout"
-                android:layout_margin="10dp"
+
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="0.1dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_shadow"
+                    android:background="@drawable/round_corners"
+
+                    android:elevation="3dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -177,7 +199,8 @@
                             android:imeOptions="actionDone"
                             android:inputType="numberPassword"
                             android:maxLength="2"
-                            android:padding="1dp" />
+                            android:padding="1dp"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -186,7 +209,8 @@
                             android:gravity="center"
                             android:padding="1dp"
                             android:text="@string/hour"
-                            android:textColor="#6E6E6E" />
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp" />
 
                         <EditText
                             android:id="@+id/preparationMinutes"
@@ -198,7 +222,8 @@
                             android:imeOptions="actionDone"
                             android:inputType="numberPassword"
                             android:maxLength="2"
-                            android:padding="1dp" />
+                            android:padding="1dp"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -207,16 +232,21 @@
                             android:gravity="center"
                             android:padding="1dp"
                             android:text="@string/minute"
-                            android:textColor="#6E6E6E" />
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="0.1dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_shadow"
+                    android:background="@drawable/round_corners"
+                    android:elevation="3dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -244,7 +274,8 @@
                             android:imeOptions="actionDone"
                             android:inputType="numberPassword"
                             android:maxLength="2"
-                            android:padding="1dp" />
+                            android:padding="1dp"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -253,7 +284,8 @@
                             android:gravity="center"
                             android:padding="1dp"
                             android:text="@string/hour"
-                            android:textColor="#6E6E6E" />
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp" />
 
                         <EditText
                             android:id="@+id/cookingMinutes"
@@ -265,7 +297,8 @@
                             android:imeOptions="actionDone"
                             android:inputType="numberPassword"
                             android:maxLength="2"
-                            android:padding="1dp" />
+                            android:padding="1dp"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -274,16 +307,21 @@
                             android:gravity="center"
                             android:padding="1dp"
                             android:text="@string/minute"
-                            android:textColor="#6E6E6E" />
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="0.1dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_shadow"
+                    android:background="@drawable/round_corners"
+                    android:elevation="3dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -312,18 +350,30 @@
                             android:imeOptions="actionDone"
                             android:inputType="numberPassword"
                             android:maxLength="2"
-                            android:padding="1dp" />
+                            android:padding="1dp"
+                            android:textSize="15sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
+            <!--<LinearLayout-->
+            <!--android:id="@+id/radioButtons"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/time_layout"-->
+            <!--android:orientation="horizontal">-->
+
             <LinearLayout
-                android:id="@+id/radioButtons"
+                android:id="@+id/radioButtonsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/time_layout"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_shadow"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -364,16 +414,82 @@
                 </RadioGroup>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/pan_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/radioButtonsLayout"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
+                android:orientation="vertical">
 
+                <Spinner
+                    android:id="@+id/pan_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:dropDownSelector="@color/colorAccent" />
 
+                <EditText
+                    android:id="@+id/pan_diameter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789"
+                    android:hint="@string/diameter"
+                    android:imeOptions="actionDone"
+                    android:inputType="phone"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/pan_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789"
+                    android:hint="@string/height"
+                    android:imeOptions="actionDone"
+                    android:inputType="phone"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/pan_length"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789"
+                    android:hint="@string/length"
+                    android:imeOptions="actionDone"
+                    android:inputType="phone"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/pan_breadth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789"
+                    android:hint="@string/breadth"
+                    android:imeOptions="actionDone"
+                    android:inputType="phone"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+            <!--</LinearLayout>-->
 
             <RelativeLayout
                 android:id="@+id/ingredients_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/radioButtons"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_shadow">
+                android:layout_below="@id/pan_layout"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp">
 
                 <TextView
                     android:id="@+id/ingredients_text_view"
@@ -391,9 +507,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ingredients_text_view"
                     android:layout_margin="5dp"
-                    android:orientation="vertical"
-                    android:clickable="true"
-                    android:onClick="onIngredientClick"/>
+                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:id="@+id/ingredients_text_layout2"
@@ -420,8 +534,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ingredients_layout"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_shadow"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -465,8 +583,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/directions_text_view_layout"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_shadow"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -475,6 +597,7 @@
                     android:padding="5dp"
                     android:text="@string/comments"
                     android:textColor="#6E6E6E"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -484,7 +607,8 @@
                     android:background="@android:color/transparent"
                     android:imeOptions="actionDone"
                     android:inputType="textNoSuggestions|textMultiLine"
-                    android:padding="5dp" />
+                    android:padding="5dp"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -492,8 +616,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/comment_layout"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_shadow"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -502,6 +630,7 @@
                     android:padding="5dp"
                     android:text="@string/source"
                     android:textColor="#6E6E6E"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -511,7 +640,8 @@
                     android:background="@android:color/transparent"
                     android:imeOptions="actionDone"
                     android:inputType="textNoSuggestions|textMultiLine"
-                    android:padding="5dp" />
+                    android:padding="5dp"
+                    android:textSize="15sp" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

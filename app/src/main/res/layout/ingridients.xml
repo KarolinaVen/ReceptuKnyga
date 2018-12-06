@@ -5,8 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_below="@id/ingredients_layout"
     android:layout_margin="1dp"
-    android:orientation="horizontal"
-    >
+    android:orientation="horizontal">
 
     <EditText
         android:id="@+id/ingredients_edit_text"
@@ -16,7 +15,8 @@
         android:imeOptions="actionDone"
         android:inputType="textNoSuggestions|textMultiLine"
         android:padding="5dp"
-        android:singleLine="false" />
+        android:singleLine="false"
+        android:textSize="15sp" />
 
     <EditText
         android:id="@+id/ingredients_number"
@@ -28,7 +28,8 @@
         android:inputType="phone"
         android:maxLength="6"
         android:padding="5dp"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="15sp" />
 
     <Spinner
         android:id="@+id/measurement_spinner"

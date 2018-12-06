@@ -11,6 +11,7 @@ public class Recipe {
     @NonNull
     private int recipeId;
     private String recipeName;
+    private String recipeNameASCII;
     private String imagePath;
     private float rating;
     private int preparationTime;
@@ -26,6 +27,14 @@ public class Recipe {
     int length;
     int breadth;
     String pan;
+
+    public String getRecipeNameASCII() {
+        return recipeNameASCII;
+    }
+
+    public void setRecipeNameASCII(String recipeNameASCII) {
+        this.recipeNameASCII = recipeNameASCII;
+    }
 
     public String getPan() {
         return pan;

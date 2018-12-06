@@ -13,8 +13,26 @@ public class RecipeIngredient {
     private int ingredientsId;
     private int recipeId;
     private String ingredientName;
+    private String ingredientNameASCII;
     private double ingredientAmount;
     private int measurementId;
+    private int number;
+
+    public String getIngredientNameASCII() {
+        return ingredientNameASCII;
+    }
+
+    public void setIngredientNameASCII(String ingredientNameASCII) {
+        this.ingredientNameASCII = ingredientNameASCII;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
     public int getMeasurementId() {
         return measurementId;

@@ -15,6 +15,7 @@ class RecipeIngredientViewHolder extends RecyclerView.ViewHolder {
     private final TextView textView;
     private final TextView numberOfIngredientsRecyclerView;
     private final TextView ingredientsMeasurementRecyclerView;
+    private final TextView numberText;
     private final AppDatabase appDatabase;
 
     RecipeIngredientViewHolder(View itemView) {
@@ -22,6 +23,7 @@ class RecipeIngredientViewHolder extends RecyclerView.ViewHolder {
 
         appDatabase = AppDatabase.getInstance(itemView.getContext());
 
+        numberText = itemView.findViewById(R.id.number);
         textView = itemView.findViewById(R.id.ingredients_recyclerview);
         numberOfIngredientsRecyclerView = itemView.findViewById(R.id.number_of_ingredients_recyclerview);
         ingredientsMeasurementRecyclerView = itemView.findViewById(R.id.ingredients_measurement_recyclerview);
@@ -29,6 +31,7 @@ class RecipeIngredientViewHolder extends RecyclerView.ViewHolder {
 
     void bind(final RecipeIngredient recipeIngredient) {
         if (recipeIngredient != null) {
+            numberText.setText(String.valueOf(recipeIngredient.getNumber()));
             textView.setText(recipeIngredient.getIngredientName());
             String amount = new DecimalFormat("#0.##").format(recipeIngredient.getIngredientAmount());
             numberOfIngredientsRecyclerView.setText(amount);

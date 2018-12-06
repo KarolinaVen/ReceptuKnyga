@@ -15,7 +15,8 @@
         android:imeOptions="actionDone"
         android:inputType="textNoSuggestions|textMultiLine"
         android:padding="5dp"
-        android:singleLine="false" />
+        android:singleLine="false"
+        android:textSize="15sp" />
 
     <ImageButton
         android:id="@+id/clear_direction_button"

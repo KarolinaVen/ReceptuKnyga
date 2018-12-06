@@ -20,6 +20,7 @@ class Converters {
         recipeIngredientCopy.setIngredientName(ingredient.getIngredientName());
         recipeIngredientCopy.setIngredientAmount(ingredient.getIngredientAmount());
         recipeIngredientCopy.setMeasurementId(ingredient.getMeasurementId());
+        recipeIngredientCopy.setNumber(ingredient.getNumber());
 
         for (Converter converter : converterList) {
             if (converter.fromMeasurement == from) {

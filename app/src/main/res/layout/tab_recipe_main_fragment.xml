@@ -23,9 +23,10 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_shadow"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
                 android:scaleType="centerCrop"
-                app:riv_corner_radius="15dp" />
+                app:riv_corner_radius="5dp" />
 
             <TextView
                 android:id="@+id/main_fragment_recipe_name"
@@ -36,7 +37,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_shadow"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
                 android:textAlignment="center"
                 android:textColor="#6E6E6E"
                 android:textSize="30sp" />
@@ -50,7 +52,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_shadow"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
                 android:gravity="center_horizontal">
 
                 <RatingBar
@@ -71,20 +74,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/main_fragment_rating_layout"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/main_fragment_preparation_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_shadow"
+                    android:background="@drawable/round_corners"
+                    android:elevation="3dp"
                     android:orientation="vertical"
-                    android:padding="5dp">
+                    android:padding="1dp">
 
                     <TextView
                         android:id="@+id/main_fragment_preparation_text"
@@ -102,13 +105,14 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:padding="5dp">
+                        android:padding="1dp">
 
                         <TextView
                             android:id="@+id/main_fragment_preparation_hour"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="5dp" />
+                            android:padding="5dp"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/main_fragment_hour_text"
@@ -123,7 +127,8 @@
                             android:id="@+id/main_fragment_preparation_minute"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="5dp" />
+                            android:padding="5dp"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -138,10 +143,12 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_shadow"
+                    android:background="@drawable/round_corners"
+                    android:elevation="3dp"
                     android:orientation="vertical"
-                    android:padding="5dp">
+                    android:padding="1dp">
 
                     <TextView
                         android:id="@+id/main_fragment_cooking_text"
@@ -159,13 +166,14 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:padding="5dp">
+                        android:padding="1dp">
 
                         <TextView
                             android:id="@+id/main_fragment_cooking_hour"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="5dp" />
+                            android:padding="5dp"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/main_fragment_cooking_hour_text"
@@ -180,7 +188,8 @@
                             android:id="@+id/main_fragment_cooking_minute"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="5dp" />
+                            android:padding="5dp"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -190,27 +199,19 @@
                             android:textColor="#6E6E6E"
                             android:textSize="15sp" />
                     </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/total_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cooking_preparation_layout"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_shadow"
+                    android:background="@drawable/round_corners"
+                    android:elevation="3dp"
                     android:orientation="vertical"
-                    android:padding="5dp">
+                    android:padding="1dp">
 
                     <TextView
                         android:id="@+id/main_fragment_total_text"
@@ -228,13 +229,14 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:padding="5dp">
+                        android:padding="1dp">
 
                         <TextView
                             android:id="@+id/main_fragment_total_hour"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="5dp" />
+                            android:padding="5dp"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/main_fragment_total_hour_text"
@@ -249,7 +251,8 @@
                             android:id="@+id/main_fragment_total_minute"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="5dp" />
+                            android:padding="5dp"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -260,52 +263,19 @@
                             android:textSize="15sp" />
                     </LinearLayout>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_shadow"
-                    android:orientation="vertical"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:id="@+id/main_fragment_yield_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="@string/yield"
-                        android:textAlignment="center"
-                        android:textColor="#6E6E6E"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:id="@+id/main_fragment_yield"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp" />
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/main_fragment_category_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/total_layout"
+                android:layout_below="@id/cooking_preparation_layout"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_shadow"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -322,7 +292,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="@string/category" />
+                    android:text="@string/category"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -334,7 +305,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_shadow"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -351,7 +323,8 @@
                     android:id="@+id/main_fragment_comment_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp" />
+                    android:padding="5dp"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -362,7 +335,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_shadow"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -380,7 +354,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textIsSelectable="true" />
+                    android:textIsSelectable="true"
+                    android:textSize="15sp" />
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>

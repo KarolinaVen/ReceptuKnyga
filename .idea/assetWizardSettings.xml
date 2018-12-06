@@ -3,56 +3,6 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
-        <entry key="imageWizard">
-          <value>
-            <PersistentState>
-              <option name="children">
-                <map>
-                  <entry key="imageAssetPanel">
-                    <value>
-                      <PersistentState>
-                        <option name="children">
-                          <map>
-                            <entry key="launcher">
-                              <value>
-                                <PersistentState>
-                                  <option name="children">
-                                    <map>
-                                      <entry key="foregroundImage">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="scalingPercent" value="99" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
-                                    </map>
-                                  </option>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="backgroundImage" value="C:\Users\Cipukiene\Desktop\Muffin To Do\MuffinToDoLogo.jpg" />
-                                      <entry key="backgroundLayerName" value="recipeBookBackground" />
-                                      <entry key="foregroundImage" value="C:\Users\Cipukiene\Desktop\Muffin To Do\MuffinToDoLogo.jpg" />
-                                      <entry key="foregroundLayerName" value="recipeBook" />
-                                      <entry key="outputName" value="Receptų knyga" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </PersistentState>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </PersistentState>
-          </value>
-        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -68,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_done_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_remove_circle_outline_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -78,8 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_done_black" />
-                            <entry key="sourceFile" value="C:\Users\Cipukiene" />
+                            <entry key="outputName" value="ic_remove_circle_outline" />
+                            <entry key="sourceFile" value="C:\Users\Rozhe" />
                           </map>
                         </option>
                       </PersistentState>

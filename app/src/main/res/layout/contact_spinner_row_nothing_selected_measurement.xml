@@ -10,5 +10,6 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:text="@string/piece"
-        android:textColor="#808080" />
+        android:textColor="#808080"
+        android:textSize="15sp" />
 </RelativeLayout>

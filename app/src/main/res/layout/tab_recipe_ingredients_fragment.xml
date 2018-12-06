@@ -12,51 +12,172 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+
             android:id="@+id/measurement_system"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/rounded_shadow"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="7dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="7dp"
-                android:paddingBottom="5dp"
-                android:text="@string/measurement_system"
-                android:textColor="#6E6E6E"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+            <LinearLayout
 
-            <RadioGroup
-                android:id="@+id/radio_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="2"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
                 android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/metric_system_fragment"
-                    style="@style/Widget.AppCompat.CompoundButton.RadioButton"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/metricSystem"
+                    android:paddingStart="7dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="7dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/measurement_system"
+                    android:textAlignment="center"
                     android:textColor="#6E6E6E"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-                <RadioButton
-                    android:id="@+id/us_system_fragment"
-                    android:layout_width="wrap_content"
+                <RadioGroup
+                    android:id="@+id/radio_group"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/usSystem"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/metric_system_fragment"
+                        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/metricSystem"
+                        android:textColor="#6E6E6E"
+                        android:textSize="15sp" />
+
+                    <RadioButton
+                        android:id="@+id/us_system_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/usSystem"
+                        android:textColor="#6E6E6E"
+                        android:textSize="15sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/yield_layout"
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_corners"
+                android:elevation="3dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/yields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/yield"
+                    android:textAlignment="center"
                     android:textColor="#6E6E6E"
-                    android:textSize="15sp" />
-            </RadioGroup>
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/yields"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <!--<android.support.design.widget.FloatingActionButton-->
+                    <!--android:id="@+id/subtract"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentStart="true"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:backgroundTint="@color/white"-->
+                    <!--android:onClick="subtractButtonClicked"-->
+                    <!--android:src="@drawable/ic_add_circle"-->
+                    <!--app:borderWidth="2dp"-->
+                    <!--app:fabSize="mini" />-->
+
+                    <ImageButton
+                        android:id="@+id/subtract"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@color/white"
+                        android:onClick="subtractButtonClicked"
+                        android:paddingStart="7dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="7dp"
+                        android:paddingBottom="5dp"
+                        android:src="@drawable/ic_remove_circle_outline" />
+
+                    <TextView
+                        android:id="@+id/yield_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingStart="7dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="7dp"
+                        android:paddingBottom="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#6E6E6E"
+                        android:textSize="15sp" />
+
+                    <ImageButton
+                        android:id="@+id/add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@color/white"
+                        android:onClick="addButtonClicked"
+                        android:paddingStart="7dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="7dp"
+                        android:paddingBottom="5dp"
+                        android:src="@drawable/ic_add_circle" />
+
+                    <!--<android.support.design.widget.FloatingActionButton-->
+                    <!--android:id="@+id/add"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:backgroundTint="@color/white"-->
+                    <!--android:onClick="addButtonClicked"-->
+                    <!--android:src="@drawable/ic_add_circle"-->
+                    <!--app:borderWidth="2dp"-->
+                    <!--app:fabSize="mini" />-->
+                </LinearLayout>
+                <!--</RelativeLayout>-->
+            </RelativeLayout>
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
@@ -74,7 +195,9 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/rounded_shadow"
+            android:background="@drawable/round_corners"
+            android:elevation="3dp"
+            android:id="@+id/pan_conversion_layout"
             android:orientation="vertical">
 
             <TextView
@@ -102,54 +225,166 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_shadow"
+                    android:background="@drawable/round_corners"
+                    android:elevation="3dp"
                     android:orientation="vertical">
 
-                    <Spinner
-                        android:id="@+id/pan_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:dropDownSelector="@color/colorAccent" />
 
-                    <EditText
-                        android:id="@+id/diameter"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/pan"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:digits="0123456789"
-                        android:hint="@string/diameter"
-                        android:imeOptions="actionDone"
-                        android:inputType="phone"
-                        android:visibility="gone" />
+                        android:paddingStart="7dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="7dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="#6E6E6E"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/height"
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:digits="0123456789"
-                        android:hint="@string/height"
-                        android:imeOptions="actionDone"
-                        android:inputType="phone"
-                        android:visibility="gone" />
+                        android:layout_height="1dp"
+                        android:layout_gravity="center"
+                        android:background="@color/colorAccent" />
 
-                    <EditText
-                        android:id="@+id/length"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:digits="0123456789"
-                        android:hint="@string/length"
-                        android:imeOptions="actionDone"
-                        android:inputType="phone"
-                        android:visibility="gone" />
 
-                    <EditText
-                        android:id="@+id/breadth"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:digits="0123456789"
-                        android:hint="@string/breadth"
-                        android:imeOptions="actionDone"
-                        android:inputType="phone"
-                        android:visibility="gone" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/diameter_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="7dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="7dp"
+                            android:paddingBottom="5dp"
+                            android:text="@string/diameter_text"
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/diameter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/diameter"
+                            android:paddingStart="7dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="7dp"
+                            android:paddingBottom="5dp"
+                            android:textSize="15sp"
+                            android:visibility="gone" />
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/height_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/height_text"
+                            android:paddingStart="7dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="7dp"
+                            android:paddingBottom="5dp"
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/height"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/height"
+                            android:paddingStart="7dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="7dp"
+                            android:paddingBottom="5dp"
+                            android:textSize="15sp"
+                            android:visibility="gone" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/length_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/length_text"
+                            android:paddingStart="7dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="7dp"
+                            android:paddingBottom="5dp"
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/length"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/length"
+                            android:paddingStart="7dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="7dp"
+                            android:paddingBottom="5dp"
+                            android:textSize="15sp"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/breadth_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/breadth_text"
+                            android:paddingStart="7dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="7dp"
+                            android:paddingBottom="5dp"
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/breadth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/breadth"
+                            android:paddingStart="7dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="7dp"
+                            android:paddingBottom="5dp"
+                            android:textSize="15sp"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -160,7 +395,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_shadow"
+                    android:background="@drawable/round_corners"
+                    android:elevation="3dp"
                     android:orientation="vertical">
 
                     <Spinner
@@ -177,6 +413,7 @@
                         android:hint="@string/diameter"
                         android:imeOptions="actionDone"
                         android:inputType="phone"
+                        android:textSize="15sp"
                         android:visibility="gone" />
 
                     <EditText
@@ -187,6 +424,7 @@
                         android:hint="@string/height"
                         android:imeOptions="actionDone"
                         android:inputType="phone"
+                        android:textSize="15sp"
                         android:visibility="gone" />
 
                     <EditText
@@ -197,6 +435,7 @@
                         android:hint="@string/length"
                         android:imeOptions="actionDone"
                         android:inputType="phone"
+                        android:textSize="15sp"
                         android:visibility="gone" />
 
                     <EditText
@@ -207,6 +446,7 @@
                         android:hint="@string/breadth"
                         android:imeOptions="actionDone"
                         android:inputType="phone"
+                        android:textSize="15sp"
                         android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>

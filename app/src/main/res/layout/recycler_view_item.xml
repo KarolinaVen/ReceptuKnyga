@@ -4,16 +4,20 @@
     android:id="@+id/main_window_recipe_layout"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:layout_margin="5dp">
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/round_corners"
+    android:elevation="3dp">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/recipe_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/rounded_shadow"
         android:scaleType="centerCrop"
         android:tint="#4F000000"
-        app:riv_corner_radius="15dp" />
+        app:riv_corner_radius="5dp" />
 
     <RatingBar
         android:id="@+id/rating"

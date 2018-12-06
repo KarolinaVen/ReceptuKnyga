@@ -34,6 +34,7 @@ import android.widget.TextView;
 
 import com.example.android.receptuknyga.List.RecipeListAdapter;
 
+import java.text.Normalizer;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
 
     EditText searchName;
+    EditText searchIngredient;
     ImageButton searchButton;
+    ImageButton searchIngredientButton;
     Spinner categorySearchSpinnerMain;
     String categoryItem;
     ImageButton searchCategoryButton;
@@ -70,10 +73,16 @@ public class MainActivity extends AppCompatActivity {
         categorySpinner();
 
         searchName = findViewById(R.id.searchNameEditText);
-        enterButton(searchName);
+        enterButtonNameSearch(searchName);
+
+        searchIngredient = findViewById(R.id.searchIngredientEditText);
+        enterButtonIngredientSearch(searchIngredient);
 
         searchButton = findViewById(R.id.searchButton);
         searchButton.setOnClickListener(searchRecipe);
+
+        searchIngredientButton = findViewById(R.id.searchIngredientButton);
+        searchIngredientButton.setOnClickListener(searchIngredientRecipe);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -124,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         LinearLayout searchLayout = findViewById(R.id.searchLayout);
         LinearLayout searchCategoryLayout = findViewById(R.id.searchCategoryLayout);
+        LinearLayout searchIngredientLayout = findViewById(R.id.search_ingredient_layout);
 
         switch (item.getItemId()) {
             case android.R.id.home: {
@@ -140,17 +150,29 @@ public class MainActivity extends AppCompatActivity {
             case R.id.homeId: {
                 searchLayout.setVisibility(View.GONE);
                 searchCategoryLayout.setVisibility(View.GONE);
+                searchIngredientLayout.setVisibility(View.GONE);
                 allRecipes();
                 break;
             }
             case R.id.search: {
+                allRecipes();
                 searchLayout.setVisibility(View.VISIBLE);
                 searchCategoryLayout.setVisibility(View.GONE);
+                searchIngredientLayout.setVisibility(View.GONE);
                 break;
             }
             case R.id.categorySearch: {
+                allRecipes();
                 searchCategoryLayout.setVisibility(View.VISIBLE);
                 searchLayout.setVisibility(View.GONE);
+                searchIngredientLayout.setVisibility(View.GONE);
+                break;
+            }
+            case R.id.ingredientSearch: {
+                allRecipes();
+                searchIngredientLayout.setVisibility(View.VISIBLE);
+                searchLayout.setVisibility(View.GONE);
+                searchCategoryLayout.setVisibility(View.GONE);
                 break;
             }
         }
@@ -159,14 +181,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void searchIngredient() {
-        final LiveData<List<Recipe>> searchIngredient =
+        String ingredientASCII = Normalizer.normalize(searchIngredient.getText().toString(), Normalizer.Form.NFD).
+                replaceAll("[^\\p{ASCII}]", "");
+        final LiveData<List<Recipe>> searchIngredients =
                 AppDatabase.getInstance(getApplicationContext()).recipeDao().
-                        ingredientName(searchName.getText().toString());
+                        ingredientName(ingredientASCII);
 
         RecyclerView recyclerView = findViewById(R.id.recipeMainView);
         final RecipeListAdapter adapter = new RecipeListAdapter(this);
 
-        searchIngredient.observe(this, new Observer<List<Recipe>>() {
+        searchIngredients.observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
                 adapter.setRecipes(recipes);
@@ -175,14 +199,14 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
-
     public void search() {
+        String nameASCII = Normalizer.normalize(searchName.getText().toString(), Normalizer.Form.NFD).
+                replaceAll("[^\\p{ASCII}]", "");
         final LiveData<List<Recipe>> searchRecipe =
                 AppDatabase.getInstance(getApplicationContext()).recipeDao().
-                        recipeName(searchName.getText().toString());
+                        recipeName(nameASCII);
 
         RecyclerView recyclerView = findViewById(R.id.recipeMainView);
 
@@ -246,13 +270,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void enterButton(final EditText editText) {
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+    public void enterButtonNameSearch(final EditText name) {
+        name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    editText.setSelection(0);
+                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    name.setSelection(0);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(name.getWindowToken(), 0);
+                    searchButton.performClick();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+    }
+
+    public void enterButtonIngredientSearch(final EditText ingredient) {
+        ingredient.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    ingredient.setSelection(0);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(ingredient.getWindowToken(), 0);
+                    searchIngredientButton.performClick();
                     return true;
                 } else {
                     return false;
@@ -269,10 +310,21 @@ public class MainActivity extends AppCompatActivity {
             if (imm != null) {
                 imm.hideSoftInputFromWindow(searchName.getWindowToken(), 0);
             }
-//            search();
-            searchIngredient();
-
+            search();
             searchName.getText().clear();
+        }
+    };
+
+    public View.OnClickListener searchIngredientRecipe = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(searchIngredient.getWindowToken(), 0);
+            }
+            searchIngredient();
+            searchIngredient.getText().clear();
         }
     };
 }

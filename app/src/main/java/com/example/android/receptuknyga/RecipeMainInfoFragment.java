@@ -26,7 +26,6 @@ public class RecipeMainInfoFragment extends Fragment {
     TextView recipePreparationMinute;
     TextView recipeCookingHour;
     TextView recipeCookingMinute;
-    TextView yield;
     TextView comment;
     TextView category;
     TextView recipeSource;
@@ -52,7 +51,6 @@ public class RecipeMainInfoFragment extends Fragment {
         recipePreparationMinute = view.findViewById(R.id.main_fragment_preparation_minute);
         recipeCookingHour = view.findViewById(R.id.main_fragment_cooking_hour);
         recipeCookingMinute = view.findViewById(R.id.main_fragment_cooking_minute);
-        yield = view.findViewById(R.id.main_fragment_yield);
         category = view.findViewById(R.id.main_fragment_category);
         comment = view.findViewById(R.id.main_fragment_comment_text);
         recipeSource = view.findViewById(R.id.main_fragment_source);
@@ -91,7 +89,6 @@ public class RecipeMainInfoFragment extends Fragment {
                     int totalMinutes = (fullRecipe.recipe.getPreparationTime() + fullRecipe.recipe.getCookingTime()) % 60;
                     totalHour.setText(String.valueOf(totalHours));
                     totalMinute.setText(String.valueOf(totalMinutes));
-                    yield.setText(String.valueOf(fullRecipe.recipe.getYield()));
                     category.setText(fullRecipe.recipe.getCategory());
                     comment.setText(fullRecipe.recipe.getComments());
                     recipeSource.setText(fullRecipe.recipe.getSource());

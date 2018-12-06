@@ -13,6 +13,15 @@ public class RecipeDirections {
     private int recipeDirectionsId;
     private String directions;
     private int recipeId;
+    int directionsNumber;
+
+    public int getDirectionsNumber() {
+        return directionsNumber;
+    }
+
+    public void setDirectionsNumber(int directionsNumber) {
+        this.directionsNumber = directionsNumber;
+    }
 
     public int getRecipeId() {
         return recipeId;
