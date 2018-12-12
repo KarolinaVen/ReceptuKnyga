@@ -392,7 +392,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/round_corners"
@@ -403,7 +402,15 @@
                         android:id="@+id/pan_spinner2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:dropDownSelector="@color/colorAccent" />
+                        android:dropDownSelector="@color/colorAccent"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center"
+                        android:background="@color/colorAccent"
+                        />
 
                     <EditText
                         android:id="@+id/diameter2"
@@ -411,6 +418,10 @@
                         android:layout_height="wrap_content"
                         android:digits="0123456789"
                         android:hint="@string/diameter"
+                        android:paddingStart="7dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="7dp"
+                        android:paddingBottom="5dp"
                         android:imeOptions="actionDone"
                         android:inputType="phone"
                         android:textSize="15sp"
@@ -425,6 +436,10 @@
                         android:imeOptions="actionDone"
                         android:inputType="phone"
                         android:textSize="15sp"
+                        android:paddingStart="7dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="7dp"
+                        android:paddingBottom="5dp"
                         android:visibility="gone" />
 
                     <EditText
@@ -436,6 +451,10 @@
                         android:imeOptions="actionDone"
                         android:inputType="phone"
                         android:textSize="15sp"
+                        android:paddingStart="7dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="7dp"
+                        android:paddingBottom="5dp"
                         android:visibility="gone" />
 
                     <EditText
@@ -447,6 +466,10 @@
                         android:imeOptions="actionDone"
                         android:inputType="phone"
                         android:textSize="15sp"
+                        android:paddingStart="7dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="7dp"
+                        android:paddingBottom="5dp"
                         android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>

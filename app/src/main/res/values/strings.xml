@@ -39,11 +39,12 @@
     <string name="breadth_text">Plotis:</string>
     <string name="length_text">Ilgis:</string>
     <string-array name="categories">
-        <item>Daržovių patiekalai</item>
-        <item>Mėsos patiekalai</item>
-        <item>Paukštienos patiekalai</item>
-        <item>Žuvies patiekalai</item>
+        <item>Užkandžiai</item>
+        <item>Pagrindiniai patiekalai</item>
+        <item>Salotos</item>
+        <item>Sriubos</item>
         <item>Desertai</item>
+        <item>Gėrimai</item>
     </string-array>
    <string-array name="pan">
        <item>Apvali forma</item>

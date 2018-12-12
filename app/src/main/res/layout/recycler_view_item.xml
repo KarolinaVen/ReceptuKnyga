@@ -19,15 +19,45 @@
         android:tint="#4F000000"
         app:riv_corner_radius="5dp" />
 
-    <RatingBar
-        android:id="@+id/rating"
-        style="@style/Widget.AppCompat.RatingBar.Indicator"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        android:clickable="false"
-        android:isIndicator="true" />
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="2dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.30"
+        android:shadowRadius="2.5"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="23sp"
+        android:id="@+id/number_of_stars"
+        android:layout_toStartOf="@id/star"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/new_star"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/star"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="2dp"/>
+
+
+
+
+
+    <!--<RatingBar-->
+        <!--android:id="@+id/rating"-->
+        <!--style="@style/Widget.AppCompat.RatingBar.Indicator"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:clickable="false"-->
+        <!--android:isIndicator="true" />-->
 
     <TextView
         android:id="@+id/recipeName"

@@ -20,21 +20,23 @@ import com.example.android.receptuknyga.RecipeInfoActivity;
 
 class RecipeViewHolder extends RecyclerView.ViewHolder {
     private final ImageView recipe_image;
-    private final RatingBar rating;
+//    private final RatingBar rating;
     private final TextView recipeName;
     private final TextView recipeCategory;
+    private final TextView numberOfStars;
 
 
     RecipeViewHolder(View itemView) {
         super(itemView);
+        numberOfStars = itemView.findViewById(R.id.number_of_stars);
         recipe_image = itemView.findViewById(R.id.recipe_image);
-        rating = itemView.findViewById(R.id.rating);
+//        rating = itemView.findViewById(R.id.rating);
         recipeName = itemView.findViewById(R.id.recipeName);
         recipeCategory = itemView.findViewById(R.id.recipeCategory);
-        LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(ContextCompat.getColor(itemView.getContext(), R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
-        stars.getDrawable(0).setColorFilter(ContextCompat.getColor(itemView.getContext(), R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
-        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(itemView.getContext(), R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
+//        LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
+//        stars.getDrawable(2).setColorFilter(ContextCompat.getColor(itemView.getContext(), R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+//        stars.getDrawable(0).setColorFilter(ContextCompat.getColor(itemView.getContext(), R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
+//        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(itemView.getContext(), R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
 
     }
 
@@ -50,7 +52,8 @@ class RecipeViewHolder extends RecyclerView.ViewHolder {
                 }
             });
 
-            rating.setRating(recipe.getRating());
+//            rating.setRating(recipe.getRating());
+            numberOfStars.setText(String.valueOf(Math.round(recipe.getRating())));
             recipeName.setText(recipe.getRecipeName());
             recipeCategory.setText(recipe.getCategory());
 

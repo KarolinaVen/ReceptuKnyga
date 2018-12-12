@@ -566,7 +566,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
 
         if (yield.getText().toString().trim().length() == 0) {
-            String yieldCount = "0";
+            String yieldCount = "1";
             try {
                 recipeResult.setYield(Integer.parseInt(yieldCount));
             } catch (NumberFormatException ex) {

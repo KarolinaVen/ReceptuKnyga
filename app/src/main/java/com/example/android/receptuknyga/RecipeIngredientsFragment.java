@@ -148,7 +148,10 @@ public class RecipeIngredientsFragment extends Fragment {
                     calculation.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            calculatePan(MeasurementSystem.ID_METRIC);
+                            if(panItem2 != null ){
+                                calculatePan(MeasurementSystem.ID_METRIC);
+                            }
+
                         }
                     });
                 } else {
@@ -156,7 +159,10 @@ public class RecipeIngredientsFragment extends Fragment {
                     calculation.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            calculatePan(MeasurementSystem.ID_US);
+                            if(panItem2 != null) {
+                                calculatePan(MeasurementSystem.ID_US);
+                            }
+
                         }
                     });
                 }
@@ -244,6 +250,7 @@ public class RecipeIngredientsFragment extends Fragment {
         recipeIngredientCopy.setIngredientName(recipeIngredient.getIngredientName());
         recipeIngredientCopy.setIngredientAmount(recipeIngredient.getIngredientAmount());
         recipeIngredientCopy.setMeasurementId(recipeIngredient.getMeasurementId());
+        recipeIngredientCopy.setNumber(recipeIngredient.getNumber());
 
         int ingredientSystemId = appDatabase.measurementDao().getMeasurementSystemId(recipeIngredient.getMeasurementId());
 

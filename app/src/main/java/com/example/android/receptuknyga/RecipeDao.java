@@ -17,10 +17,10 @@ public interface RecipeDao {
     @Query("SELECT *  FROM Recipe ORDER BY recipeId DESC")
     LiveData<List<Recipe>> allRecipes();
 
-    @Query("SELECT * FROM Recipe WHERE recipeNameASCII LIKE '%' || :recipeNameASCII || '%' GROUP BY recipeName ORDER BY recipeId DESC  ")
+    @Query("SELECT * FROM Recipe WHERE recipeNameASCII LIKE '%' || :recipeNameASCII || '%' ORDER BY recipeId DESC  ")
     LiveData<List<Recipe>> recipeName(String recipeNameASCII);
 
-    @Query("SELECT * FROM Recipe, RecipeIngredient WHERE Recipe.recipeId = RecipeIngredient.recipeId AND ingredientNameASCII LIKE '%' || :ingredientNameASCII || '%' GROUP BY ingredientName")
+    @Query("SELECT * FROM Recipe, RecipeIngredient WHERE Recipe.recipeId = RecipeIngredient.recipeId AND ingredientNameASCII LIKE '%' || :ingredientNameASCII || '%'")
     LiveData<List<Recipe>> ingredientName(String ingredientNameASCII);
 
     @Query("SELECT * FROM Recipe WHERE category = :category")

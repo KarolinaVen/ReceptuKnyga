@@ -41,7 +41,8 @@
                 android:elevation="3dp"
                 android:textAlignment="center"
                 android:textColor="#6E6E6E"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:textAllCaps="true"/>
 
             <LinearLayout
                 android:id="@+id/main_fragment_rating_layout"
@@ -355,7 +356,8 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:textIsSelectable="true"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:autoLink="web"/>
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
