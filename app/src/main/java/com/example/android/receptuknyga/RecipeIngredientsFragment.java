@@ -88,16 +88,14 @@ public class RecipeIngredientsFragment extends Fragment {
 
         calculation = view.findViewById(R.id.calculation);
         subtract = view.findViewById(R.id.subtract);
+
         subtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double yield = Double.parseDouble(yieldCount.getText().toString());
                 if (yield > 1.0) {
                     yield--;
-                    String amount = new DecimalFormat("#0.##").format(yield);
-                    yieldCount.setText(amount);
-                    calculateYield(yield);
-                    savedYield--;
+                    recalculateYield(yield);
                 }
             }
         });
@@ -108,10 +106,7 @@ public class RecipeIngredientsFragment extends Fragment {
             public void onClick(View v) {
                 double yield = Double.parseDouble(yieldCount.getText().toString());
                 yield++;
-                String amount = new DecimalFormat("#0.##").format(yield);
-                yieldCount.setText(amount);
-                calculateYield(yield);
-                savedYield++;
+                recalculateYield(yield);
             }
         });
 
@@ -148,26 +143,42 @@ public class RecipeIngredientsFragment extends Fragment {
                     calculation.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(panItem2 != null ){
+                            if (panItem2 != null) {
                                 calculatePan(MeasurementSystem.ID_METRIC);
                             }
 
                         }
                     });
+
                 } else {
                     changeSystem(MeasurementSystem.ID_US);
                     calculation.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(panItem2 != null) {
+                            if (panItem2 != null) {
                                 calculatePan(MeasurementSystem.ID_US);
                             }
 
                         }
                     });
+
                 }
+
+                double yield = Double.parseDouble(yieldCount.getText().toString());
+                recalculateYield(yield);
             }
         });
+    }
+
+    public void recalculateYield(double yield) {
+        String amount = new DecimalFormat("#0.##").format(yield);
+        yieldCount.setText(amount);
+        if (metricSystemFragment.isChecked()) {
+            calculateYield(yield, MeasurementSystem.ID_METRIC);
+        } else {
+            calculateYield(yield, MeasurementSystem.ID_US);
+        }
+        calculation.performClick();
     }
 
     public void panSpinner2() {
@@ -207,7 +218,7 @@ public class RecipeIngredientsFragment extends Fragment {
     }
 
     public void calculatePan(int systemId) {
-        List<RecipeIngredient> ingredients = fullRecipeLiveData.getValue().recipeIngredient;
+        List<RecipeIngredient> ingredients = adapter.getRecipes();
         List<RecipeIngredient> calculateIngredients = new ArrayList<>();
 
         for (int i = 0; i < ingredients.size(); i++) {
@@ -216,32 +227,44 @@ public class RecipeIngredientsFragment extends Fragment {
         adapter.setRecipes(calculateIngredients);
     }
 
-    public void calculateYield(double yield) {
+    public void calculateYield(double yield, int systemId) {
         List<RecipeIngredient> ingredients = fullRecipeLiveData.getValue().recipeIngredient;
         List<RecipeIngredient> calculateIngredients = new ArrayList<>();
 
         for (int i = 0; i < ingredients.size(); i++) {
-            calculateIngredients.add(recalculateYield(ingredients.get(i), yield));
+            calculateIngredients.add(recalculateYield(ingredients.get(i), yield, systemId));
         }
         adapter.setRecipes(calculateIngredients);
     }
 
-    public RecipeIngredient recalculateYield(RecipeIngredient recipeIngredient, double yield) {
+    public RecipeIngredient recalculateYield(RecipeIngredient recipeIngredient, double yield, int systemId) {
+
+        RecipeIngredient recipeIngredientCopy = new RecipeIngredient();
+        recipeIngredientCopy.setIngredientsId(recipeIngredient.getIngredientsId());
+        recipeIngredientCopy.setRecipeId(recipeIngredient.getRecipeId());
+        recipeIngredientCopy.setIngredientName(recipeIngredient.getIngredientName());
+        recipeIngredientCopy.setMeasurementId(recipeIngredient.getMeasurementId());
+        recipeIngredientCopy.setNumber(recipeIngredient.getNumber());
 
         double ingredient = recipeIngredient.getIngredientAmount();
         double ingredientAmount = (ingredient / savedYield) * yield;
 
-        recipeIngredient.setIngredientAmount(ingredientAmount);
+        recipeIngredientCopy.setIngredientAmount(ingredientAmount);
 
-        return recipeIngredient;
+        int ingredientSystemId = appDatabase.measurementDao().getMeasurementSystemId(recipeIngredient.getMeasurementId());
+        if (ingredientSystemId == systemId) {
+
+            return recipeIngredientCopy;
+        } else {
+            return Converters.convertIngredient(recipeIngredientCopy);
+        }
+
     }
 
     public RecipeIngredient calculateIngredient(RecipeIngredient recipeIngredient, int systemId) {
         String panDiameter2 = diameter2.getText().toString();
         String panHeight2 = height2.getText().toString();
-        String panLength = length.getText().toString();
         String panLength2 = length2.getText().toString();
-        String panBreadth = breadth.getText().toString();
         String panBreadth2 = breadth2.getText().toString();
 
         RecipeIngredient recipeIngredientCopy = new RecipeIngredient();
@@ -253,6 +276,7 @@ public class RecipeIngredientsFragment extends Fragment {
         recipeIngredientCopy.setNumber(recipeIngredient.getNumber());
 
         int ingredientSystemId = appDatabase.measurementDao().getMeasurementSystemId(recipeIngredient.getMeasurementId());
+
 
         if (panItem.equals("Apvali forma") && panItem2.equals("Apvali forma")) {
             double circleVolume = circleVolume(panDiameter, panHeight);
@@ -358,7 +382,8 @@ public class RecipeIngredientsFragment extends Fragment {
                 if (fullRecipe != null) {
                     adapter.setRecipes(fullRecipe.recipeIngredient);
 
-                    if (fullRecipe.recipe.getPan() != null) {
+                    if (fullRecipe.recipe.getPan() != null ) {
+                        panConversionLayout.setVisibility(View.VISIBLE);
                         if (fullRecipe.recipe.getPan().equals("Apvali forma")) {
                             pan.setText(fullRecipe.recipe.getPan());
                             panDiameter = String.valueOf(fullRecipe.recipe.getDiameter());
@@ -370,8 +395,13 @@ public class RecipeIngredientsFragment extends Fragment {
                             heightText.setVisibility(View.VISIBLE);
                             height.setText(String.valueOf(fullRecipe.recipe.getHeight()));
                             diameter.setText(String.valueOf(fullRecipe.recipe.getDiameter()));
+                            breadthText.setVisibility(View.GONE);
+                            breadth.setVisibility(View.GONE);
+                            lengthText.setVisibility(View.GONE);
+                            length.setVisibility(View.GONE);
                         } else {
                             pan.setText(fullRecipe.recipe.getPan());
+                            panItem = fullRecipe.recipe.getPan();
                             panHeight = String.valueOf(fullRecipe.recipe.getHeight());
                             panLength = String.valueOf(fullRecipe.recipe.getLength());
                             panBreadth = String.valueOf(fullRecipe.recipe.getBreadth());
@@ -384,6 +414,8 @@ public class RecipeIngredientsFragment extends Fragment {
                             breadth.setText(String.valueOf(fullRecipe.recipe.getBreadth()));
                             height.setText(String.valueOf(fullRecipe.recipe.getHeight()));
                             length.setText(String.valueOf(fullRecipe.recipe.getLength()));
+                            diameterText.setVisibility(View.GONE);
+                            diameter.setVisibility(View.GONE);
                         }
 
                     } else {

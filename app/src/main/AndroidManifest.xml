@@ -3,6 +3,7 @@
     package="com.example.android.receptuknyga">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,9 @@
         android:roundIcon="@mipmap/recipe_book_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider android:authorities="com.facebook.app.FacebookContentProvider2179960142253898"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -18,6 +22,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".AddRecipeActivity"

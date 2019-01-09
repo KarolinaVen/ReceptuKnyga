@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.example.android.receptuknyga.R;
 import com.example.android.receptuknyga.RecipeDirections;
 
+
 class RecipeDirectionsViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView directionsRecyclerView;

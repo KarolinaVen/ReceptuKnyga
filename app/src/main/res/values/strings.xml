@@ -38,6 +38,7 @@
     <string name="height_text">Aukštis:</string>
     <string name="breadth_text">Plotis:</string>
     <string name="length_text">Ilgis:</string>
+    <string name="no_result">Rezultatų nėra</string>
     <string-array name="categories">
         <item>Užkandžiai</item>
         <item>Pagrindiniai patiekalai</item>

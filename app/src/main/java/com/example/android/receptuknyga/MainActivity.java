@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner categorySearchSpinnerMain;
     String categoryItem;
     ImageButton searchCategoryButton;
+    LinearLayout noResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         allRecipes();
+
+        noResults = findViewById(R.id.no_result_layout);
 
         searchCategoryButton = findViewById(R.id.searchCategoryButton);
         searchCategoryButton.setOnClickListener(new View.OnClickListener() {
@@ -189,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recipeMainView);
         final RecipeListAdapter adapter = new RecipeListAdapter(this);
-
         searchIngredients.observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
@@ -197,8 +199,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        if (adapter.getItemCount() == 0) {
+            noResults.setVisibility(View.VISIBLE);
+        } else {
+            noResults.setVisibility(View.GONE);
+
+        }
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     public void search() {
@@ -219,6 +229,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if (adapter.getItemCount() == 0) {
+            noResults.setVisibility(View.VISIBLE);
+        } else {
+            noResults.setVisibility(View.GONE);
+
+        }
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -231,13 +248,19 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recipeMainView);
 
         final RecipeListAdapter adapter = new RecipeListAdapter(this);
-
         searchRecipeCategory.observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
                 adapter.setRecipes(recipes);
             }
         });
+
+        if(adapter.getItemCount() == 0){
+            noResults.setVisibility(View.VISIBLE);
+        } else {
+            noResults.setVisibility(View.GONE);
+
+        }
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

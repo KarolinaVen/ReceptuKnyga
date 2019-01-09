@@ -14,5 +14,6 @@
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"
             tools:listitem="@layout/recipe_directions_recyclerview" />
+        
     </RelativeLayout>
 </ScrollView>

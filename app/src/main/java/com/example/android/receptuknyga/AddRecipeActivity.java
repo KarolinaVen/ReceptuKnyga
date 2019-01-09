@@ -96,11 +96,6 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         appDatabase = AppDatabase.getInstance(getApplicationContext());
 
-        if (recipeId != -1) {
-            fullRecipe = AppDatabase.getInstance(this).recipeDao().allRecipeInfo(recipeId);
-            updateRecipe();
-        }
-
         metricRadioButton = findViewById(R.id.metricSystem);
         usRadioButton = findViewById(R.id.usSystem);
         directions_layout = findViewById(R.id.directions_layout);
@@ -157,10 +152,16 @@ public class AddRecipeActivity extends AppCompatActivity {
         categorySpinner();
 
         panSpinner = findViewById(R.id.pan_spinner);
-        panSpinner();
 
         addDirectionButton = findViewById(R.id.addDirectionButton);
         addDirectionButton.setOnClickListener(directions);
+
+        if (recipeId != -1) {
+            fullRecipe = AppDatabase.getInstance(this).recipeDao().allRecipeInfo(recipeId);
+            updateRecipe();
+        }else{
+            panSpinner(null);
+        }
     }
 
     public void onRadioButtonClicked(View view) {
@@ -178,7 +179,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
     }
 
-    public String normalized(String text){
+    public String normalized(String text) {
         return Normalizer.normalize(text, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 
@@ -241,13 +242,14 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
     }
 
-    public void panSpinner() {
+    public void panSpinner(String pan) {
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.pan, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         panSpinner.setPrompt("Forma");
         panSpinner.setAdapter(new NothingSelectedSpinnerAdapter(
                 adapter, R.layout.pan_spinner, this));
+
         panSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -274,6 +276,9 @@ public class AddRecipeActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        int panSpinnerPosition = adapter.getPosition(pan) + 1;
+        panSpinner.setSelection(panSpinnerPosition);
     }
 
     public void spinnerMeasurement(final Spinner ingredientsSpinner, String selection, int measurementSystemId) {
@@ -519,6 +524,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         } else {
             recipeResult.setMeasurementSystemId(2);
         }
+
+
         recipeResult.setPan(panItem);
 
         if (panLength.getText().toString().trim().length() == 0) {
@@ -683,14 +690,15 @@ public class AddRecipeActivity extends AppCompatActivity {
                 this, R.array.categories, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.pan, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+//                this, R.array.pan, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         fullRecipe.observe(this, new Observer<FullRecipe>() {
             @Override
             public void onChanged(@Nullable FullRecipe fullRecipe) {
                 if (fullRecipe != null) {
+                    panItem = fullRecipe.recipe.getPan();
                     recipeNameInput.setText(fullRecipe.recipe.getRecipeName());
                     yourSelectedImage = BitmapFactory.decodeFile(fullRecipe.recipe.getImagePath());
                     imageViewPhoto.setImageBitmap(yourSelectedImage);
@@ -698,36 +706,33 @@ public class AddRecipeActivity extends AppCompatActivity {
                     int id = fullRecipe.recipe.getMeasurementSystemId();
 
                     ratingBar.setRating(fullRecipe.recipe.getRating());
+
                     categorySpinner.setAdapter(categoryAdapter);
-                    panSpinner.setAdapter(adapter);
+                    //panSpinner.setAdapter(adapter);
 
                     String compareCategorySpinner = fullRecipe.recipe.getCategory();
-                    String comparePanSpinner = fullRecipe.recipe.getPan();
+                    String pan = fullRecipe.recipe.getPan();
 
                     int spinnerPosition = categoryAdapter.getPosition(compareCategorySpinner);
-                    int panSpinnerPosition = adapter.getPosition(comparePanSpinner);
+//                    int panSpinnerPosition = adapter.getPosition(pan);
 
                     categorySpinner.setSelection(spinnerPosition);
-                    panSpinner.setSelection(panSpinnerPosition);
+//                    panSpinner.setSelection(panSpinnerPosition);
 
-                    if(comparePanSpinner == null){
-                        panSpinner();
-                    } else if (comparePanSpinner.equals("Apvali forma")) {
-                        panDiameter.setVisibility(View.VISIBLE);
-                        panHeight.setVisibility(View.VISIBLE);
-                        panLength.setVisibility(View.GONE);
-                        panBreadth.setVisibility(View.GONE);
-                        panDiameter.setText(String.valueOf(fullRecipe.recipe.getDiameter()));
-                        panHeight.setText(String.valueOf(fullRecipe.recipe.getHeight()));
-                    } else if (comparePanSpinner.equals("Kvadratinė forma")) {
-                        panLength.setVisibility(View.VISIBLE);
-                        panHeight.setVisibility(View.VISIBLE);
-                        panBreadth.setVisibility(View.VISIBLE);
-                        panDiameter.setVisibility(View.GONE);
-                        panHeight.setText(String.valueOf(fullRecipe.recipe.getHeight()));
-                        panBreadth.setText(String.valueOf(fullRecipe.recipe.getBreadth()));
-                        panLength.setText(String.valueOf(fullRecipe.recipe.getLength()));
+                    panSpinner(pan);
+                    if (pan != null) {
+                        if (pan.equals("Apvali forma")) {
+                            panDiameter.setText(String.valueOf(fullRecipe.recipe.getDiameter()));
+                            panHeight.setText(String.valueOf(fullRecipe.recipe.getHeight()));
+                        } else if (pan.equals("Kvadratinė forma")) {
+                            panHeight.setText(String.valueOf(fullRecipe.recipe.getHeight()));
+                            panBreadth.setText(String.valueOf(fullRecipe.recipe.getBreadth()));
+                            panLength.setText(String.valueOf(fullRecipe.recipe.getLength()));
+                        }
+                    } else {
+
                     }
+
 
                     preparationHours.setText(String.valueOf(fullRecipe.recipe.getPreparationTime() / 60));
                     preparationMinutes.setText(String.valueOf(fullRecipe.recipe.getPreparationTime() % 60));

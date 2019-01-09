@@ -38,6 +38,10 @@ public class RecipeIngredientListAdapter extends RecyclerView.Adapter<RecipeIngr
         notifyDataSetChanged();
     }
 
+    public List<RecipeIngredient> getRecipes() {
+        return mRecipe;
+    }
+
     @Override
     public int getItemCount() {
         if (mRecipe != null)
